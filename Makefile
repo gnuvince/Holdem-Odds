@@ -1,6 +1,10 @@
+OPTIONS=-Wall -O2 -std=c99 -pedantic
 all:
-	gcc -Wall -O2 -std=c99 -pedantic -c src/cards.c -o src/cards.o
-	gcc -Wall -O2 -std=c99 -pedantic src/cards.o src/holdemodds.c -o holdemodds
+	make build
+	gcc ${OPTIONS} src/cards.o src/holdemodds.c -o holdemodds
+
+build:
+	gcc ${OPTIONS} -c src/cards.c -o src/cards.o
 
 clean:
 	rm -f holdemodds src/*.o
