@@ -17,7 +17,7 @@ typedef struct {
 } Card;
 
 
-size_t    enumIndex(char, const char*, size_t);
+size_t    indexOf(char, const char*, size_t);
 int       NewCard(Card*, char, char);
 Rank      CharToRank(char);
 Suit      CharToSuit(char);

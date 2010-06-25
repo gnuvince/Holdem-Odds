@@ -11,7 +11,7 @@ char SuitChars[SUITS_PER_DECK] = "cdhs";
  * Return the 1-based index of c in chars.  Return
  * 0 if the character isn't found.
  */
-size_t enumIndex(char c, const char* chars, size_t N) {
+size_t indexOf(char c, const char* chars, size_t N) {
     for (size_t i = 0; i < N; ++i) {
         if (chars[i] == c) {
             return i+1;
@@ -21,12 +21,12 @@ size_t enumIndex(char c, const char* chars, size_t N) {
 }
 
 Rank CharToRank(char r) {
-    return enumIndex(r, RankChars, RANKS_PER_DECK);
+    return indexOf(r, RankChars, RANKS_PER_DECK);
 }
 
 
 Suit CharToSuit(char s) {
-    return enumIndex(s, SuitChars, SUITS_PER_DECK);
+    return indexOf(s, SuitChars, SUITS_PER_DECK);
 }
 
 
