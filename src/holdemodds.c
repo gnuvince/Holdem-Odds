@@ -7,7 +7,7 @@
 
 
 
-void usage(char* name) {
+void usage(const char* name) {
     fprintf(stderr, "Usage: %s <spec>\n", name);
     exit(1);
 }
