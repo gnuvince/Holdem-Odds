@@ -13,7 +13,6 @@ void usage(const char* name) {
 }
 
 
-
 int main(int argc, char **argv) {
     Card card;
 

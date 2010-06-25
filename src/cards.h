@@ -2,6 +2,9 @@
 
 #define _CARDS_H
 
+#define RANKS_PER_DECK 13
+#define SUITS_PER_DECK 4
+
 typedef enum _Suit { InvalidSuit, Club, Diamond, Heart, Spade } Suit;
 typedef enum _Rank {
     InvalidRank, Deuce, Trey, Four, Five, Six, Seven,
@@ -14,9 +17,10 @@ typedef struct {
 } Card;
 
 
-int NewCard(Card*, char, char);
-Rank CharToRank(char);
-Suit CharToSuit(char);
-int CompareCards(const Card*, const Card*);
+size_t    enumIndex(char, const char*, size_t);
+int       NewCard(Card*, char, char);
+Rank      CharToRank(char);
+Suit      CharToSuit(char);
+int       CompareCards(const Card*, const Card*);
 
 #endif

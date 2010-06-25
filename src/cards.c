@@ -2,34 +2,31 @@
 
 #include "cards.h"
 
-Rank CharToRank(char r) {
-    switch (r) {
-    case '2': return Deuce;
-    case '3': return Trey;
-    case '4': return Four;
-    case '5': return Five;
-    case '6': return Six;
-    case '7': return Seven;
-    case '8': return Eight;
-    case '9': return Nine;
-    case 'T': return Ten;
-    case 'J': return Jack;
-    case 'K': return Queen;
-    case 'Q': return King;
-    case 'A': return Ace;
-    default : return InvalidRank;
+
+char RankChars[RANKS_PER_DECK] = "23456789TJQKA";
+char SuitChars[SUITS_PER_DECK] = "cdhs";
+
+
+/*
+ * Return the 1-based index of c in chars.  Return
+ * 0 if the character isn't found.
+ */
+size_t enumIndex(char c, const char* chars, size_t N) {
+    for (size_t i = 0; i < N; ++i) {
+        if (chars[i] == c) {
+            return i+1;
+        }
     }
+    return 0;
+}
+
+Rank CharToRank(char r) {
+    return enumIndex(r, RankChars, RANKS_PER_DECK);
 }
 
 
 Suit CharToSuit(char s) {
-    switch (s) {
-    case 'c': return Club;
-    case 'd': return Diamond;
-    case 'h': return Heart;
-    case 's': return Spade;
-    default : return InvalidSuit;
-    }
+    return enumIndex(s, SuitChars, SUITS_PER_DECK);
 }
 
 
