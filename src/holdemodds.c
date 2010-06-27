@@ -8,26 +8,34 @@
 
 
 void usage(const char* name) {
-    fprintf(stderr, "Usage: %s <spec>\n", name);
+    fprintf(stderr, "Usage: %s <spec1> <spec2>\n", name);
     exit(1);
 }
 
 
 int main(int argc, char **argv) {
-    Card card;
+    Card card1, card2;
 
-    if (argc == 1 || strlen(argv[1]) != 2) {
+    if (argc != 3) {
         usage(argv[0]);
     }
 
-    char rankSpec = argv[1][0];
-    char suitSpec = argv[1][1];
+    int ok1 = NewCard(&card1, argv[1][0], argv[1][1]);
+    int ok2 = NewCard(&card2, argv[2][0], argv[2][1]);
 
-    if (NewCard(&card, rankSpec, suitSpec)) {
-        printf("We have a card!\n");
+    if (ok1 && ok2) {
+        char relation;
+        int comp = CompareCards(&card1, &card2);
+        if (comp < 0)
+            relation = '<';
+        else if (comp > 0)
+            relation = '>';
+        else
+            relation = '=';
+        printf("%s %c %s\n", argv[1], relation, argv[2]);
     }
     else {
-        printf("This card is invalid...\n");
+        usage(argv[0]);
     }
 
     return 0;

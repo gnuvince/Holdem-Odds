@@ -3,10 +3,6 @@
 #include "cards.h"
 
 
-char RankChars[RANKS_PER_DECK] = "23456789TJQKA";
-char SuitChars[SUITS_PER_DECK] = "cdhs";
-
-
 /*
  * Return the 1-based index of c in chars.  Return
  * 0 if the character isn't found.
@@ -21,12 +17,12 @@ size_t indexOf(char c, const char* chars, size_t N) {
 }
 
 Rank CharToRank(char r) {
-    return indexOf(r, RankChars, RANKS_PER_DECK);
+    return indexOf(r, RANK_CHARS, RANKS_PER_DECK);
 }
 
 
 Suit CharToSuit(char s) {
-    return indexOf(s, SuitChars, SUITS_PER_DECK);
+    return indexOf(s, SUIT_CHARS, SUITS_PER_DECK);
 }
 
 
@@ -47,5 +43,5 @@ int NewCard(Card *c, char r, char s) {
 
 
 int CompareCards(const Card* a, const Card* b) {
-    return b->rank - a->rank;
+    return a->rank - b->rank;
 }
