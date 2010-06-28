@@ -17,15 +17,19 @@ size_t indexOf(char c, const char* chars, size_t N) {
 }
 
 Rank CharToRank(char r) {
-    return indexOf(r, RANK_CHARS, RANKS_PER_DECK);
+    return (Rank)indexOf(r, RANK_CHARS, RANKS_PER_DECK);
 }
 
 
 Suit CharToSuit(char s) {
-    return indexOf(s, SUIT_CHARS, SUITS_PER_DECK);
+    return (Suit)indexOf(s, SUIT_CHARS, SUITS_PER_DECK);
 }
 
 
+/*
+ * Create a new card and return 1 if the operation
+ * was successful, 0 otherwise.
+ */
 int NewCard(Card *c, char r, char s) {
     Rank rank = CharToRank(r);
     Suit suit = CharToSuit(s);
