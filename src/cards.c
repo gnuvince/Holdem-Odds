@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "cards.h"
 
@@ -48,4 +49,15 @@ int NewCard(Card *c, char r, char s) {
 
 int CompareCards(const Card* a, const Card* b) {
     return a->rank - b->rank;
+}
+
+
+void CardToString(char* out, const Card* c) {
+    char ret[3];
+
+    ret[0] = RANK_CHARS[(int)c->rank - 1];
+    ret[1] = SUIT_CHARS[(int)c->suit - 1];
+    ret[2] = '\0';
+
+    strncpy(out, ret, 3);
 }

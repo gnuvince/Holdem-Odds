@@ -27,5 +27,6 @@ int       NewCard(Card*, char, char);
 Rank      CharToRank(char);
 Suit      CharToSuit(char);
 int       CompareCards(const Card*, const Card*);
+void      CardToString(char *, const Card*);
 
 #endif

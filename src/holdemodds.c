@@ -22,6 +22,8 @@ int main(int argc, char **argv) {
 
     int ok1 = NewCard(&card1, argv[1][0], argv[1][1]);
     int ok2 = NewCard(&card2, argv[2][0], argv[2][1]);
+    char card1Str[3];
+    char card2Str[3];
 
     if (ok1 && ok2) {
         char relation;
@@ -32,7 +34,10 @@ int main(int argc, char **argv) {
             relation = '>';
         else
             relation = '=';
-        printf("%s %c %s\n", argv[1], relation, argv[2]);
+
+        CardToString(card1Str, &card1);
+        CardToString(card2Str, &card2);
+        printf("%s %c %s\n", card1Str, relation, card2Str);
     }
     else {
         usage(argv[0]);
