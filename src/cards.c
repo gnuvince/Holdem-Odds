@@ -47,6 +47,10 @@ int NewCard(Card *c, char r, char s) {
 
 
 int CompareCards(const Card* a, const Card* b) {
+    if (a == NULL)
+        return 1;
+    if (b == NULL)
+        return -1;
     return a->rank - b->rank;
 }
 
