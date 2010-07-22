@@ -2,6 +2,8 @@
 
 #define _CARDS_H
 
+#include <stdlib.h>
+
 #define RANKS_PER_DECK 13
 #define SUITS_PER_DECK 4
 
