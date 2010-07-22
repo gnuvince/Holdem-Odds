@@ -120,6 +120,11 @@ void TestCompareCards(CuTest* tc) {
                     output[5] = ranks[i2];
                     output[6] = suits[k];
                     CuAssert(tc, output, CompareCards(&c1, &c2) < 0);
+
+                    output[0] = ranks[i2];
+                    output[1] = suits[k];
+                    output[5] = ranks[i];
+                    output[6] = suits[j];
                     CuAssert(tc, output, CompareCards(&c2, &c1) > 0);
                 }
             }
