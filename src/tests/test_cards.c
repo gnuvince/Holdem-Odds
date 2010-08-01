@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 
 #include "CuTest.h"
@@ -55,16 +56,51 @@ void TestCharToRank(CuTest* tc) {
     }
 }
 
+
 void TestNewCard(CuTest* tc) {
+    for (Rank r = Deuce; r <= Ace; ++r) {
+        for (Suit s = Club; s <= Spade; ++s) {
+            Card c = NewCard(r, s);
+            char output[] = "__ should be valid";
+            output[0] = ranks[r-1];
+            output[1] = suits[s-1];
+            CuAssert(tc, output, c.rank != InvalidRank);
+            CuAssert(tc, output, c.suit != InvalidSuit);
+            CuAssert(tc, output, CardIsValid(&c));
+        }
+    }
+
+    /* Make sure out-of-bounds values cause an invalid value */
+    {
+        Card c;
+        c = NewCard(InvalidRank, Spade);
+        CuAssert(tc, "InvalidRank is an invalid rank", !CardIsValid(&c));
+        CuAssert(tc, "InvalidRank is an invalid rank", c.rank == InvalidRank && c.suit == InvalidSuit);
+
+        c = NewCard(Ace+1, Spade);
+        CuAssert(tc, "Ace+1 is an invalid rank", !CardIsValid(&c));
+        CuAssert(tc, "Ace+1 is an invalid rank", c.rank == InvalidRank && c.suit == InvalidSuit);
+
+        c = NewCard(Deuce, InvalidSuit);
+        CuAssert(tc, "InvalidSuit is an invalid suit", !CardIsValid(&c));
+        CuAssert(tc, "InvalidSuit is an invalid suit", c.rank == InvalidRank && c.suit == InvalidSuit);
+
+        c = NewCard(Deuce, Spade+1);
+        CuAssert(tc, "Spade+1 is an invalid suit", !CardIsValid(&c));
+        CuAssert(tc, "Spade+1 is an invalid suit", c.rank == InvalidRank && c.suit == InvalidSuit);
+    }
+}
+
+
+void TestNewCardFromChars(CuTest* tc) {
     char output[] = "__ isn't a valid card";
 
     for (size_t i = 0; i < ranksLength; ++i) {
         for (size_t j = 0; j < suitsLength; ++j) {
-            Card c;
-            int result = NewCard(&c, ranks[i], suits[j]);
+            Card c = NewCardFromChars(ranks[i], suits[j]);
             output[0] = ranks[i];
             output[1] = suits[j];
-            CuAssert(tc, output, result == 1);
+            CuAssert(tc, output, CardIsValid(&c));
         }
     }
 
@@ -77,64 +113,64 @@ void TestNewCard(CuTest* tc) {
 
     for (size_t i = 0; i < invalidRanksLength; ++i) {
         for (size_t j = 0; j < invalidSuitsLength; ++j) {
-            Card c;
-            int result = NewCard(&c, invalidRanks[i], invalidSuits[j]);
+            Card c = NewCardFromChars(invalidRanks[i], invalidSuits[j]);
             output2[0] = invalidRanks[i];
             output2[1] = invalidSuits[j];
-            CuAssert(tc, output2, result == 0);
+            CuAssert(tc, output2, !CardIsValid(&c));
         }
     }
 }
 
-void TestCompareCards(CuTest* tc) {
-    // Equal cards
+
+void TestNewCardFromString(CuTest* tc) {
+    char output[] = "__ isn't a valid card";
+
     for (size_t i = 0; i < ranksLength; ++i) {
         for (size_t j = 0; j < suitsLength; ++j) {
-            for (size_t k = 0; k < suitsLength; ++k) {
-                Card c1, c2;
-                NewCard(&c1, ranks[i], suits[j]);
-                NewCard(&c2, ranks[i], suits[k]);
-
-                char output[] = "__ != __";
-                output[0] = ranks[i];
-                output[1] = suits[j];
-                output[6] = ranks[i];
-                output[7] = suits[k];
-                CuAssert(tc, output, CompareCards(&c1, &c2) == 0);
-            }
+            char s[] = "__";
+            s[0] = ranks[i];
+            s[1] = suits[j];
+            Card c = NewCardFromString(s);
+            output[0] = ranks[i];
+            output[1] = suits[j];
+            CuAssert(tc, output, CardIsValid(&c));
         }
     }
 
-    // Card1 < Card2
-    for (size_t i = 0; i < ranksLength-1; ++i) {
-        for (size_t i2 = i+1; i2 < ranksLength; ++i2) {
-            for (size_t j = 0; j < suitsLength; ++j) {
-                for (size_t k = 0; k < suitsLength; ++k) {
-                    Card c1, c2;
-                    NewCard(&c1, ranks[i], suits[j]);
-                    NewCard(&c2, ranks[i2], suits[k]);
-
-                    char output[] = "__ > __";
-                    output[0] = ranks[i];
-                    output[1] = suits[j];
-                    output[5] = ranks[i2];
-                    output[6] = suits[k];
-                    CuAssert(tc, output, CompareCards(&c1, &c2) < 0);
-
-                    output[0] = ranks[i2];
-                    output[1] = suits[k];
-                    output[5] = ranks[i];
-                    output[6] = suits[j];
-                    CuAssert(tc, output, CompareCards(&c2, &c1) > 0);
-                }
-            }
-        }
-    }
 
     Card c;
-    NewCard(&c, 'A', 's');
-    CuAssert(tc, "c1 as NULL should be 1", CompareCards(NULL, &c) == 1);
-    CuAssert(tc, "c2 as NULL should be -1", CompareCards(&c, NULL) == -1);
+
+    c = NewCardFromString("");
+    CuAssert(tc, "Invalid length input", !CardIsValid(&c));
+    CuAssert(tc, "Invalid lenght input", c.rank == InvalidRank && c.suit == InvalidSuit);
+
+    c = NewCardFromString("A");
+    CuAssert(tc, "Invalid length input", !CardIsValid(&c));
+    CuAssert(tc, "Invalid lenght input", c.rank == InvalidRank && c.suit == InvalidSuit);
+
+    c = NewCardFromString("AAA");
+    CuAssert(tc, "Invalid length input", !CardIsValid(&c));
+    CuAssert(tc, "Invalid lenght input", c.rank == InvalidRank && c.suit == InvalidSuit);
+}
+
+void TestCardCompareEqual(CuTest* tc) {
+    for (Rank r = Deuce; r <= Ace; ++r) {
+        for (Suit s1 = Club; s1 <= Spade; ++s1) {
+            for (Suit s2 = Club; s2 <= Spade; ++s2) {
+                Card c1 = NewCard(r, s1);
+                Card c2 = NewCard(r, s2);
+
+                char output[9];
+                char c1Str[3];
+                char c2Str[3];
+                CardToString(c1Str, &c1);
+                CardToString(c2Str, &c2);
+
+                snprintf(output, 8, "%s != %s", c1Str, c2Str);
+                CuAssert(tc, output, CardCompare(&c1, &c2) == 0);
+            }
+        }
+    }
 }
 
 
@@ -144,7 +180,9 @@ CuSuite* CardUtilSuite() {
     SUITE_ADD_TEST(suite, TestCharToSuit);
     SUITE_ADD_TEST(suite, TestCharToRank);
     SUITE_ADD_TEST(suite, TestNewCard);
-    SUITE_ADD_TEST(suite, TestCompareCards);
+    SUITE_ADD_TEST(suite, TestNewCardFromChars);
+    SUITE_ADD_TEST(suite, TestNewCardFromString);
+    SUITE_ADD_TEST(suite, TestCardCompareEqual);
 
     return suite;
 }

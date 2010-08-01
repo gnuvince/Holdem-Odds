@@ -14,20 +14,19 @@ void usage(const char* name) {
 
 
 int main(int argc, char **argv) {
-    Card card1, card2;
-
     if (argc != 3) {
         usage(argv[0]);
     }
 
-    int ok1 = NewCard(&card1, argv[1][0], argv[1][1]);
-    int ok2 = NewCard(&card2, argv[2][0], argv[2][1]);
+    Card card1 = NewCardFromString(argv[1]);
+    Card card2 = NewCardFromString(argv[2]);
+
     char card1Str[3];
     char card2Str[3];
 
-    if (ok1 && ok2) {
+    if (CardIsValid(&card1) && CardIsValid(&card2)) {
         char relation;
-        int comp = CompareCards(&card1, &card2);
+        int comp = CardCompare(&card1, &card2);
         if (comp < 0)
             relation = '<';
         else if (comp > 0)

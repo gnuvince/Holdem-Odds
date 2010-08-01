@@ -1,6 +1,10 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "cards.h"
+
+
+Card INVALID_CARD = { .rank = InvalidRank, .suit = InvalidSuit };
 
 
 /*
@@ -27,26 +31,37 @@ Suit CharToSuit(char s) {
 
 
 /*
- * Create a new card and return 1 if the operation
- * was successful, 0 otherwise.
+ * Create a new card and return it.  rank and suit are set
+ * to InvalidRank and InvalidSuit respectively if the
+ * parameters are invalid.
  */
-int NewCard(Card *c, char r, char s) {
-    Rank rank = CharToRank(r);
-    Suit suit = CharToSuit(s);
+Card NewCard(Rank rank, Suit suit) {
+    Card card = { .rank = rank, .suit = suit };
 
-    if (rank == InvalidRank || suit == InvalidSuit) {
-        c = NULL;
-        return 0;
-    }
-    else {
-        c->rank = rank;
-        c->suit = suit;
-        return 1;
-    }
+    if (CardIsValid(&card))
+        return card;
+    else
+        return INVALID_CARD;
 }
 
 
-int CompareCards(const Card* a, const Card* b) {
+Card NewCardFromChars(char r, char s) {
+    Rank rank = CharToRank(r);
+    Suit suit = CharToSuit(s);
+
+    return NewCard(rank, suit);
+}
+
+
+Card NewCardFromString(char *s) {
+    if (strlen(s) != 2)
+        return INVALID_CARD;
+    else
+        return NewCardFromChars(s[0], s[1]);
+}
+
+
+int CardCompare(const Card* a, const Card* b) {
     if (a == NULL)
         return 1;
     if (b == NULL)
@@ -65,4 +80,10 @@ void CardToString(char* out, const Card* c) {
         out[1] = SUIT_CHARS[(int)c->suit - 1];
     }
     out[2] = '\0';
+}
+
+
+int CardIsValid(Card* c) {
+    return (c->rank >= Deuce && c->rank <= Ace &&
+            c->suit >= Club  && c->suit <= Spade);
 }

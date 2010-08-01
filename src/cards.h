@@ -24,11 +24,18 @@ typedef struct {
 } Card;
 
 
+
 size_t    indexOf(char, const char*, size_t);
-int       NewCard(Card*, char, char);
+
+/* Constructors */
+Card      NewCard(Rank, Suit);
+Card      NewCardFromChars(char, char);
+Card      NewCardFromString(char*);
+
+int       CardIsValid(Card *);
 Rank      CharToRank(char);
 Suit      CharToSuit(char);
-int       CompareCards(const Card*, const Card*);
+int       CardCompare(const Card*, const Card*);
 void      CardToString(char *, const Card*);
 
 #endif
