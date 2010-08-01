@@ -57,6 +57,37 @@ void TestCharToRank(CuTest* tc) {
 }
 
 
+void TestCardIsValid(CuTest* tc) {
+    // Valid cards
+    for (Rank r = Deuce; r <= Ace; ++r) {
+        for (Suit s = Club; s <= Spade; ++s) {
+            Card c;
+            c.rank = r;
+            c.suit = s;
+            char output[] = "__ should be valid";
+            output[0] = ranks[r-1];
+            output[1] = suits[s-1];
+            CuAssert(tc, output, CardIsValid(&c));
+        }
+    }
+
+    // Invalid cards
+    Card c;
+
+    c.rank = InvalidRank;
+    c.suit = Spade;
+    CuAssert(tc, "InvalidRank is not a valid rank", !CardIsValid(&c));
+    c.rank = Ace+1;
+    CuAssert(tc, "Ace+1 is not a valid rank", !CardIsValid(&c));
+
+    c.rank = Deuce;
+    c.suit = InvalidSuit;
+    CuAssert(tc, "InvalidSuit is not a valid suit", !CardIsValid(&c));
+    c.suit = Spade+1;
+    CuAssert(tc, "Spade+1 is not a valid suit", !CardIsValid(&c));
+}
+
+
 void TestNewCard(CuTest* tc) {
     for (Rank r = Deuce; r <= Ace; ++r) {
         for (Suit s = Club; s <= Spade; ++s) {
@@ -153,6 +184,7 @@ void TestNewCardFromString(CuTest* tc) {
     CuAssert(tc, "Invalid lenght input", c.rank == InvalidRank && c.suit == InvalidSuit);
 }
 
+
 void TestCardCompareEqual(CuTest* tc) {
     for (Rank r = Deuce; r <= Ace; ++r) {
         for (Suit s1 = Club; s1 <= Spade; ++s1) {
@@ -179,6 +211,7 @@ CuSuite* CardUtilSuite() {
 
     SUITE_ADD_TEST(suite, TestCharToSuit);
     SUITE_ADD_TEST(suite, TestCharToRank);
+    SUITE_ADD_TEST(suite, TestCardIsValid);
     SUITE_ADD_TEST(suite, TestNewCard);
     SUITE_ADD_TEST(suite, TestNewCardFromChars);
     SUITE_ADD_TEST(suite, TestNewCardFromString);
