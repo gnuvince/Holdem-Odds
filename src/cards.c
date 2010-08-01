@@ -20,11 +20,18 @@ size_t indexOf(char c, const char* chars, size_t N) {
     return 0;
 }
 
+
+/*
+ * Convert a char to the rank it represents or InvalidRank.
+ */
 Rank CharToRank(char r) {
     return (Rank)indexOf(r, RANK_CHARS, RANKS_PER_DECK);
 }
 
 
+/*
+ * Convert a char to the suit it represents or InvalidSuit.
+ */
 Suit CharToSuit(char s) {
     return (Suit)indexOf(s, SUIT_CHARS, SUITS_PER_DECK);
 }
@@ -45,6 +52,10 @@ Card NewCard(Rank rank, Suit suit) {
 }
 
 
+/*
+ * Create a new card from two chars representing the rank
+ * and the suit.
+ */
 Card NewCardFromChars(char r, char s) {
     Rank rank = CharToRank(r);
     Suit suit = CharToSuit(s);
@@ -53,6 +64,10 @@ Card NewCardFromChars(char r, char s) {
 }
 
 
+/*
+ * Create a new card from a 2-char string representing
+ * the rank and the suit.
+ */
 Card NewCardFromString(char *s) {
     if (strlen(s) != 2)
         return INVALID_CARD;
@@ -61,6 +76,12 @@ Card NewCardFromString(char *s) {
 }
 
 
+/*
+ * Compare two cards and return:
+ *   < 0 if a is smaller than b
+ *     0 if a is equal to b
+ *   > 0 if a is greater than b
+ */
 int CardCompare(const Card* a, const Card* b) {
     if (a == NULL)
         return 1;
@@ -70,6 +91,9 @@ int CardCompare(const Card* a, const Card* b) {
 }
 
 
+/*
+ * Convert a card to its 2-char string representation.
+ */
 void CardToString(char* out, const Card* c) {
     if (c == NULL || c->rank == InvalidRank || c->suit == InvalidSuit) {
         out[0] = '-';
@@ -83,6 +107,10 @@ void CardToString(char* out, const Card* c) {
 }
 
 
+/*
+ * Returns whether a card has valid values for its
+ * rank and suit.
+ */
 int CardIsValid(Card* c) {
     return (c->rank >= Deuce && c->rank <= Ace &&
             c->suit >= Club  && c->suit <= Spade);
