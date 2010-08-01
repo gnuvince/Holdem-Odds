@@ -192,14 +192,60 @@ void TestCardCompareEqual(CuTest* tc) {
                 Card c1 = NewCard(r, s1);
                 Card c2 = NewCard(r, s2);
 
-                char output[9];
                 char c1Str[3];
                 char c2Str[3];
                 CardToString(c1Str, &c1);
                 CardToString(c2Str, &c2);
 
+                char output[9];
                 snprintf(output, 8, "%s != %s", c1Str, c2Str);
                 CuAssert(tc, output, CardCompare(&c1, &c2) == 0);
+            }
+        }
+    }
+}
+
+
+void TestCardCompareLess(CuTest* tc) {
+    for (Rank r1 = Deuce; r1 < Ace; ++r1) {
+        for (Rank r2 = r1 + 1; r2 <= Ace; ++r2) {
+            for (Suit s1 = Club; s1 <= Spade; ++s1) {
+                for (Suit s2 = Club; s2 <= Spade; ++s2) {
+                    Card c1 = NewCard(r1, s1);
+                    Card c2 = NewCard(r2, s2);
+
+                    char c1Str[3];
+                    char c2Str[3];
+                    CardToString(c1Str, &c1);
+                    CardToString(c2Str, &c2);
+
+                    char output[9];
+                    snprintf(output, 8, "%s !< %s", c1Str, c2Str);
+                    CuAssert(tc, output, CardCompare(&c1, &c2) < 0);
+                }
+            }
+        }
+    }
+}
+
+
+void TestCardCompareGreater(CuTest* tc) {
+    for (Rank r1 = Deuce; r1 < Ace; ++r1) {
+        for (Rank r2 = r1 + 1; r2 <= Ace; ++r2) {
+            for (Suit s1 = Club; s1 <= Spade; ++s1) {
+                for (Suit s2 = Club; s2 <= Spade; ++s2) {
+                    Card c1 = NewCard(r1, s1);
+                    Card c2 = NewCard(r2, s2);
+
+                    char c1Str[3];
+                    char c2Str[3];
+                    CardToString(c1Str, &c1);
+                    CardToString(c2Str, &c2);
+
+                    char output[9];
+                    snprintf(output, 8, "%s !> %s", c1Str, c2Str);
+                    CuAssert(tc, output, CardCompare(&c2, &c1) > 0);
+                }
             }
         }
     }
@@ -216,8 +262,8 @@ CuSuite* CardUtilSuite() {
     SUITE_ADD_TEST(suite, TestNewCardFromChars);
     SUITE_ADD_TEST(suite, TestNewCardFromString);
     SUITE_ADD_TEST(suite, TestCardCompareEqual);
+    SUITE_ADD_TEST(suite, TestCardCompareLess);
+    SUITE_ADD_TEST(suite, TestCardCompareGreater);
 
     return suite;
 }
-
-
