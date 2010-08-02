@@ -85,6 +85,15 @@ void TestCardIsValid(CuTest* tc) {
     CuAssert(tc, "InvalidSuit is not a valid suit", !CardIsValid(&c));
     c.suit = Spade+1;
     CuAssert(tc, "Spade+1 is not a valid suit", !CardIsValid(&c));
+
+    c.rank = InvalidRank;
+    c.suit = InvalidSuit;
+    CuAssert(tc, "InvalidRank and InvalidSuit do not form a valid card", !CardIsValid(&c));
+
+    c.rank = Ace+1;
+    c.suit = Spade+1;
+    CuAssert(tc, "Ace+1 and Spade+1 do not form a valid card", !CardIsValid(&c));
+
 }
 
 
