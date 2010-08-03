@@ -83,10 +83,6 @@ Card NewCardFromString(char *s) {
  *   > 0 if a is greater than b
  */
 int CardCompare(const Card* a, const Card* b) {
-    if (a == NULL)
-        return 1;
-    if (b == NULL)
-        return -1;
     return a->rank - b->rank;
 }
 
@@ -112,7 +108,6 @@ void CardToString(char* out, const Card* c) {
  * rank and suit.
  */
 int CardIsValid(const Card* c) {
-    return c != NULL &&
-        (c->rank >= Deuce && c->rank <= Ace &&
-         c->suit >= Club  && c->suit <= Spade);
+    return (c->rank >= Deuce && c->rank <= Ace &&
+            c->suit >= Club  && c->suit <= Spade);
 }
