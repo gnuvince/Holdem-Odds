@@ -12,8 +12,8 @@
 #define SUIT_CHARS "cdhs"
 
 
-typedef enum _Suit { InvalidSuit, Club, Diamond, Heart, Spade } Suit;
-typedef enum _Rank {
+typedef enum { InvalidSuit, Club, Diamond, Heart, Spade } Suit;
+typedef enum {
     InvalidRank, Deuce, Trey, Four, Five, Six, Seven,
     Eight, Nine, Ten, Jack, Queen, King, Ace
 } Rank;
