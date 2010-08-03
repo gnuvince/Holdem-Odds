@@ -95,7 +95,7 @@ int CardCompare(const Card* a, const Card* b) {
  * Convert a card to its 2-char string representation.
  */
 void CardToString(char* out, const Card* c) {
-    if (c == NULL || c->rank == InvalidRank || c->suit == InvalidSuit) {
+    if (!CardIsValid(c)) {
         out[0] = '-';
         out[1] = '-';
     }
@@ -111,7 +111,8 @@ void CardToString(char* out, const Card* c) {
  * Returns whether a card has valid values for its
  * rank and suit.
  */
-int CardIsValid(Card* c) {
-    return (c->rank >= Deuce && c->rank <= Ace &&
-            c->suit >= Club  && c->suit <= Spade);
+int CardIsValid(const Card* c) {
+    return c != NULL &&
+        (c->rank >= Deuce && c->rank <= Ace &&
+         c->suit >= Club  && c->suit <= Spade);
 }

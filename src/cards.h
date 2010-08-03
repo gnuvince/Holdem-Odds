@@ -32,7 +32,7 @@ Card      NewCard(Rank, Suit);
 Card      NewCardFromChars(char, char);
 Card      NewCardFromString(char*);
 
-int       CardIsValid(Card *);
+int       CardIsValid(const Card *);
 Rank      CharToRank(char);
 Suit      CharToSuit(char);
 int       CardCompare(const Card*, const Card*);
