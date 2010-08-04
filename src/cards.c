@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "cards.h"
 
@@ -107,7 +108,7 @@ void CardToString(char* out, const Card* c) {
  * Returns whether a card has valid values for its
  * rank and suit.
  */
-int CardIsValid(const Card* c) {
+bool CardIsValid(const Card* c) {
     return (c->rank >= Deuce && c->rank <= Ace &&
             c->suit >= Club  && c->suit <= Spade);
 }
