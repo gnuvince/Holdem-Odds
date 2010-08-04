@@ -13,12 +13,6 @@ typedef enum {
 } HandType;
 
 
-typedef struct {
-    HandType type;
-    Card* extraInformation;
-} HandClass;
-
-
 int HandIsStraightFlush(const Card*);
 int HandIsFourOfAKind(const Card*);
 int HandIsFullHouse(const Card*);
@@ -28,8 +22,6 @@ int HandIsThreeOfAKind(const Card*);
 int HandIsTwoPair(const Card*);
 int HandIsPair(const Card*);
 int HandIsHighCard(const Card*);
-
-HandType HandClassify(const Card*);
 
 int HandIsValid(const Card*);
 

@@ -8,4 +8,3 @@
   InvalidSuit if incorrectly constructed.
 - [X] Alternative "constructors": NewCardFromString(char *) and
   NewCardFromChar(char, char)
-- [X] Use stdbool.h

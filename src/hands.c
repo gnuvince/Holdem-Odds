@@ -2,16 +2,16 @@
 #include "hands.h"
 
 
-
 /*
  * A valid hand has 5 cards in decreasing order.
  */
 int HandIsValid(const Card* cards) {
-    for (size_t i = 0; i < HAND_LENGTH; ++i)
-        if (!CardIsValid(&cards[i]))
-            return 0;
+    int ok = 1;
 
-    return 1;
+    for (size_t i = 0; i < HAND_LENGTH; ++i)
+        ok = ok && CardIsValid(&cards[i]);
+
+    return ok;
 }
 
 
