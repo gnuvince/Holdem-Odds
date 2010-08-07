@@ -27,6 +27,8 @@ bool HandIsTwoPair(const Card*);
 bool HandIsPair(const Card*);
 bool HandIsHighCard(const Card*);
 
+int  HandCompare(const Card*, const Card*);
+
 bool HandIsValid(const Card*);
 
 #endif

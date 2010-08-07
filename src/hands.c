@@ -4,6 +4,33 @@
 #include "hands.h"
 
 
+/*
+ * Compare two hands and return:
+ *   < 0 if hand1 > hand2
+ *     0 if hand1 = hand2
+ *   > 0 if hand1 < hand2
+ */
+int HandCompare(const Card* hand1, const Card* hand2) {
+    int diff = HandClassify(hand1) - HandClassify(hand2);
+
+    if (diff != 0)
+        return diff;
+
+    // Tie breaker when two hands of the same type.
+    for (int i = 0; i < HAND_LENGTH; ++i) {
+        int cmp = CardCompare(&hand1[i], &hand2[i]);
+        if (cmp != 0)
+            return cmp;
+    }
+    return 0;
+}
+
+
+/*
+ * Find the type of the hand that's been given to us.  Go
+ * from strongest to weakest type; this assures us that a
+ * full house is not classified as merely a pair.
+ */
 HandType HandClassify(const Card* cards) {
     if (HandIsStraightFlush(cards)) return StraightFlush;
     if (HandIsFourOfAKind(cards))   return FourOfAKind;
