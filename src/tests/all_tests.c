@@ -3,12 +3,14 @@
 #include "CuTest.h"
 
 CuSuite* CardUtilSuite();
+CuSuite* HandUtilSuite();
 
 void RunAllTests(void) {
     CuString* output = CuStringNew();
     CuSuite* suite = CuSuiteNew();
 
     CuSuiteAddSuite(suite, CardUtilSuite());
+    CuSuiteAddSuite(suite, HandUtilSuite());
 
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

@@ -18,6 +18,7 @@ test: build
 		src/hands.o \
 		src/tests/all_tests.c \
 		src/tests/test_cards.c \
+		src/tests/test_hands.c \
 		src/tests/CuTest.c
 	src/tests/all_tests
 
