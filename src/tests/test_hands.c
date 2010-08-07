@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 
 #include "CuTest.h"
@@ -19,6 +20,7 @@ void NewHandFromString(const char* string, Card* hand) {
 
 void TestHandClassifyStraightFlush(CuTest* tc) {
     Card hand[5];
+    char output[512]; // Error messages should not exceed this length.
     const char *straight_flushes[] = {
         "As Ks Qs Js Ts",
         "Ks Qs Js Ts 9s",
@@ -33,9 +35,9 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
         NULL
     };
     for (size_t i = 0; straight_flushes[i] != NULL; ++i) {
+        snprintf(output, 512, "[%s] should be a straight flush", straight_flushes[i]);
         NewHandFromString(straight_flushes[i], hand);
-        CuAssert(tc, straight_flushes[i],
-                 HandClassify((const Card*)&hand) == StraightFlush);
+        CuAssert(tc, output, HandClassify((const Card*)&hand) == StraightFlush);
     }
 
     const char *not_straight_flushes[] = {
@@ -46,9 +48,9 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
     };
 
     for (size_t i = 0; not_straight_flushes[i] != NULL; ++i) {
+        snprintf(output, 512, "[%s] should be a straight flush", not_straight_flushes[i]);
         NewHandFromString(not_straight_flushes[i], hand);
-        CuAssert(tc, not_straight_flushes[i],
-                 HandClassify((const Card*)&hand) != StraightFlush);
+        CuAssert(tc, output, HandClassify((const Card*)&hand) != StraightFlush);
     }
 }
 
