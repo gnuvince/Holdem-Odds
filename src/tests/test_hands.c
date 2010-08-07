@@ -48,7 +48,7 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
     };
 
     for (size_t i = 0; not_straight_flushes[i] != NULL; ++i) {
-        snprintf(output, 512, "[%s] should be a straight flush", not_straight_flushes[i]);
+        snprintf(output, 512, "[%s] should not be a straight flush", not_straight_flushes[i]);
         NewHandFromString(not_straight_flushes[i], hand);
         CuAssert(tc, output, HandClassify((const Card*)&hand) != StraightFlush);
     }
