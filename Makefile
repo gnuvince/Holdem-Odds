@@ -1,6 +1,6 @@
 CC=clang
 #CC=gcc
-CFLAGS=-Wall -O2 -std=c99 -pedantic
+CFLAGS=-Wall -Wextra -pedantic -O2 -std=c99
 
 holdemodds: build
 	${CC} ${CFLAGS} src/cards.o src/holdemodds.c -o holdemodds

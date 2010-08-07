@@ -1,24 +1,40 @@
+#include <stdbool.h>
+
 #include "cards.h"
 #include "hands.h"
+
+
+HandType HandClassify(const Card* cards) {
+    if (HandIsStraightFlush(cards)) return StraightFlush;
+    if (HandIsFourOfAKind(cards))   return FourOfAKind;
+    if (HandIsFullHouse(cards))     return FullHouse;
+    if (HandIsFlush(cards))         return Flush;
+    if (HandIsStraight(cards))      return Straight;
+    if (HandIsThreeOfAKind(cards))  return ThreeOfAKind;
+    if (HandIsTwoPair(cards))       return TwoPair;
+    if (HandIsPair(cards))          return Pair;
+    if (HandIsHighCard(cards))      return HighCard;
+
+    return InvalidHand; // Should be unreachable
+}
 
 
 /*
  * A valid hand has 5 cards in decreasing order.
  */
-int HandIsValid(const Card* cards) {
-    int ok = 1;
-
+bool HandIsValid(const Card* cards) {
     for (size_t i = 0; i < HAND_LENGTH; ++i)
-        ok = ok && CardIsValid(&cards[i]);
+        if (!CardIsValid(&cards[i]))
+            return false;
 
-    return ok;
+    return true;
 }
 
 
 /*
  * A straight flush is a straight _and_ a flush.
  */
-int HandIsStraightFlush(const Card* cards) {
+bool HandIsStraightFlush(const Card* cards) {
     return HandIsStraight(cards) && HandIsFlush(cards);
 }
 
@@ -27,8 +43,12 @@ int HandIsStraightFlush(const Card* cards) {
 /*
  * Four of a kind is when 4 of the 5 cards have the same rank.
  */
-int HandIsFourOfAKind(const Card* cards) {
-    return 0;
+bool HandIsFourOfAKind(const Card* cards) {
+    for (int i = 1; i < HAND_LENGTH - 1; ++i)
+        if (cards[i].rank != cards[0].rank)
+            return false;
+
+    return true;
 }
 
 
@@ -36,22 +56,25 @@ int HandIsFourOfAKind(const Card* cards) {
  * A full house is when a hand is composed of a pair and three of a
  * kind.
  */
-int HandIsFullHouse(const Card* cards) {
-    return 0;
+bool HandIsFullHouse(const Card* cards) {
+    // Make sure the first three cards are three of a kind.
+    for (int i = i; i < 3; ++i)
+        if (cards[i].rank != cards[0].rank)
+            return false;
+
+    return cards[3].rank == cards[4].rank;
 }
 
 
 /*
  * A flush is a hand where all cards have the same suit.
  */
-int HandIsFlush(const Card* cards) {
-    Suit suit = cards[0].suit;
-
+bool HandIsFlush(const Card* cards) {
     for (size_t i = 1; i < HAND_LENGTH; ++i)
-        if (cards[i].suit != suit)
-            return 0;
+        if (cards[i].suit != cards[0].suit)
+            return false;
 
-    return 1;
+    return true;
 }
 
 
@@ -60,8 +83,20 @@ int HandIsFlush(const Card* cards) {
  * is considered both high and low, meaning it can follow a King
  * or precede a Deuce.
  */
-int HandIsStraight(const Card* cards) {
-    return 0;
+bool HandIsStraight(const Card* cards) {
+    if (cards[0].rank == Five) {
+        for (int i = 1; i < HAND_LENGTH - 1; ++i)
+            if (cards[i].rank + 1 != cards[i - 1].rank)
+                return false;
+        return cards[4].rank == Ace;
+    }
+    else {
+        for (int i = 1; i < HAND_LENGTH; ++i)
+            if (cards[i].rank + 1 != cards[i - 1].rank)
+                return false;
+        return true;
+
+    }
 }
 
 
@@ -69,8 +104,13 @@ int HandIsStraight(const Card* cards) {
  * A hand is three of a kind if three cards have the same rank
  * and the other two cards don't match.
  */
-int HandIsThreeOfAKind(const Card* cards) {
-    return 0;
+bool HandIsThreeOfAKind(const Card* cards) {
+    // Make sure the first three cards are three of a kind.
+    for (int i = i; i < 3; ++i)
+        if (cards[i].rank != cards[0].rank)
+            return false;
+
+    return cards[3].rank != cards[4].rank;
 }
 
 
@@ -78,8 +118,8 @@ int HandIsThreeOfAKind(const Card* cards) {
  * A hand has two pairs if two sets of two cards share
  * the same rank and the other card doesn't match.
  */
-int HandIsTwoPair(const Card* cards) {
-    return 0;
+bool HandIsTwoPair(const Card* cards) {
+    return cards[0].rank == cards[1].rank && cards[2].rank == cards[3].rank;
 }
 
 
@@ -87,15 +127,16 @@ int HandIsTwoPair(const Card* cards) {
  * A hand is a pair if two cards share the same rank
  * and the other three cards all have different ranks.
  */
-int HandIsPair(const Card* cards) {
-    return 0;
+bool HandIsPair(const Card* cards) {
+    return cards[0].rank == cards[1].rank;
 }
 
 
 /*
  * A hand is high card if there is no pair, no straight or
- * no flush.
+ * no flush.  (Any hand is a high card hand)
  */
-int HandIsHighCard(const Card* cards) {
-    return 0;
+bool HandIsHighCard(const Card* cards) {
+    (void)cards;
+    return true;
 }

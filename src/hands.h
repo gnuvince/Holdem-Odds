@@ -2,6 +2,8 @@
 
 #define _HANDS_H
 
+#include <stdbool.h>
+
 #include "cards.h"
 
 #define HAND_LENGTH 5
@@ -13,16 +15,18 @@ typedef enum {
 } HandType;
 
 
-int HandIsStraightFlush(const Card*);
-int HandIsFourOfAKind(const Card*);
-int HandIsFullHouse(const Card*);
-int HandIsFlush(const Card*);
-int HandIsStraight(const Card*);
-int HandIsThreeOfAKind(const Card*);
-int HandIsTwoPair(const Card*);
-int HandIsPair(const Card*);
-int HandIsHighCard(const Card*);
+HandType HandClassify(const Card*);
 
-int HandIsValid(const Card*);
+bool HandIsStraightFlush(const Card*);
+bool HandIsFourOfAKind(const Card*);
+bool HandIsFullHouse(const Card*);
+bool HandIsFlush(const Card*);
+bool HandIsStraight(const Card*);
+bool HandIsThreeOfAKind(const Card*);
+bool HandIsTwoPair(const Card*);
+bool HandIsPair(const Card*);
+bool HandIsHighCard(const Card*);
+
+bool HandIsValid(const Card*);
 
 #endif
