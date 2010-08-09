@@ -4,10 +4,10 @@
 #include "CuTest.h"
 #include "cards.h"
 
-char ranks[] = "23456789TJQKA";
-char suits[] = "chds";
-size_t ranksLength = 13;
-size_t suitsLength = 4;
+static char ranks[] = "23456789TJQKA";
+static char suits[] = "chds";
+static size_t ranksLength = 13;
+static size_t suitsLength = 4;
 
 void TestCharToSuit(CuTest* tc) {
     // Valid suits

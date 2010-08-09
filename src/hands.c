@@ -26,6 +26,8 @@ int HandCompare(const Card* hand1, const Card* hand2) {
 }
 
 
+
+
 /*
  * Find the type of the hand that's been given to us.  Go
  * from strongest to weakest type; this assures us that a
@@ -133,7 +135,7 @@ bool HandIsStraight(const Card* cards) {
  */
 bool HandIsThreeOfAKind(const Card* cards) {
     // Make sure the first three cards are three of a kind.
-    for (int i = i; i < 3; ++i)
+    for (int i = 0; i < 3; ++i)
         if (cards[i].rank != cards[0].rank)
             return false;
 
@@ -146,7 +148,8 @@ bool HandIsThreeOfAKind(const Card* cards) {
  * the same rank and the other card doesn't match.
  */
 bool HandIsTwoPair(const Card* cards) {
-    return cards[0].rank == cards[1].rank && cards[2].rank == cards[3].rank;
+    return cards[0].rank == cards[1].rank
+        && cards[2].rank == cards[3].rank;
 }
 
 
