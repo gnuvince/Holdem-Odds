@@ -55,7 +55,7 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
 
 void TestHandClassifyQuads(CuTest* tc) {
     Card hand[5];
-    char output[OUTPUT_LENGTH]; // Error messages should not exceed this length.
+    char output[OUTPUT_LENGTH];
 
     for (Rank r1 = Deuce; r1 <= Ace; ++r1) {
         for (Rank r2 = Deuce; r2 <= Ace; ++r2) {
@@ -79,7 +79,7 @@ void TestHandClassifyQuads(CuTest* tc) {
 
 void TestHandClassifyFullHouse(CuTest* tc) {
     Card hand[5];
-    char output[OUTPUT_LENGTH]; // Error messages should not exceed this length.
+    char output[OUTPUT_LENGTH];
 
     for (Rank r1 = Deuce; r1 <= Ace; ++r1) {
         for (Rank r2 = Deuce; r2 <= Ace; ++r2) {
@@ -152,7 +152,7 @@ void TestHandClassifyStraight(CuTest* tc) {
 
 void TestHandClassifyTrips(CuTest* tc) {
     Card hand[5];
-    char output[OUTPUT_LENGTH]; // Error messages should not exceed this length.
+    char output[OUTPUT_LENGTH];
 
     for (Rank r1 = Deuce; r1 <= Ace; ++r1) {
         for (Rank r2 = Deuce; r2 <= Ace; ++r2) {

@@ -4,6 +4,7 @@
 
 CuSuite* CardUtilSuite();
 CuSuite* HandUtilSuite();
+CuSuite* BucketSuite();
 
 void RunAllTests(void) {
     CuString* output = CuStringNew();
@@ -11,6 +12,7 @@ void RunAllTests(void) {
 
     CuSuiteAddSuite(suite, CardUtilSuite());
     CuSuiteAddSuite(suite, HandUtilSuite());
+    CuSuiteAddSuite(suite, BucketSuite());
 
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

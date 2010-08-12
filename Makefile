@@ -5,8 +5,7 @@ CFLAGS=-Wall -Wextra -pedantic -O2 -std=c99
 holdemodds: build
 	${CC} ${CFLAGS} src/cards.o src/holdemodds.c -o holdemodds
 
-build: cards.o hands.o
-#	${CC} ${CFLAGS} -c src/cards.c -o src/cards.o
+build: cards.o hands.o bucket.o
 
 clean:
 	rm -f holdemodds src/*.o src/tests/*.o src/tests/all_tests
@@ -16,9 +15,11 @@ test: build
 	${CC} ${CFLAGS} -Isrc -Isrc/tests -o src/tests/all_tests \
 		src/cards.o \
 		src/hands.o \
+		src/bucket.o \
 		src/tests/all_tests.c \
 		src/tests/test_cards.c \
 		src/tests/test_hands.c \
+		src/tests/test_bucket.c \
 		src/tests/CuTest.c
 	src/tests/all_tests
 
@@ -27,3 +28,6 @@ cards.o: src/cards.c src/cards.h
 
 hands.o: cards.o src/hands.c src/hands.h
 	${CC} ${CFLAGS} -c src/hands.c -o src/hands.o
+
+bucket.o: cards.o src/bucket.c src/bucket.h
+	${CC} ${CFLAGS} -c src/bucket.c -o src/bucket.o
