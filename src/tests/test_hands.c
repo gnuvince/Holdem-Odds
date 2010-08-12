@@ -265,7 +265,55 @@ void TestHandSort(CuTest* tc) {
     char output[OUTPUT_LENGTH];
 
     const char *hands[] = {
+        // Royal flush
+        "Ts Js Qs Ks As", "As Ks Qs Js Ts",
+        "Js Ts Qs Ks As", "As Ks Qs Js Ts",
+        "Js Qs Ts Ks As", "As Ks Qs Js Ts",
+        "Js Qs Ks Ts As", "As Ks Qs Js Ts",
+        "Js Qs Ks As Ts", "As Ks Qs Js Ts",
+
+        // Quads
         "2c Ac Ad Ah As", "Ac Ad Ah As 2c",
+        "Ac 2c Ad Ah As", "Ac Ad Ah As 2c",
+        "Ad Ac 2c Ah As", "Ac Ad Ah As 2c",
+        "Ac Ad Ah 2c As", "Ac Ad Ah As 2c",
+        "Ac Ad Ah As 2c", "Ac Ad Ah As 2c",
+
+        // Full house
+        "2c 2s Ac Ad Ah", "Ac Ad Ah 2s 2c",
+        "2c Ac 2s Ad Ah", "Ac Ad Ah 2s 2c",
+        "2c Ac Ad 2s Ah", "Ac Ad Ah 2s 2c",
+        "2c Ac Ad Ah 2s", "Ac Ad Ah 2s 2c",
+        "Ac 2c 2s Ad Ah", "Ac Ad Ah 2s 2c",
+        "Ac 2c Ad 2s Ah", "Ac Ad Ah 2s 2c",
+        "Ac 2c Ad Ah 2s", "Ac Ad Ah 2s 2c",
+        "Ac Ad 2c 2s Ah", "Ac Ad Ah 2s 2c",
+        "Ac Ad 2c Ah 2s", "Ac Ad Ah 2s 2c",
+        "Ac Ad Ah 2c 2s", "Ac Ad Ah 2s 2c",
+
+        // Trips
+        "2c 3s Ac Ad Ah", "Ac Ad Ah 3s 2c",
+        "2c Ac 3s Ad Ah", "Ac Ad Ah 3s 2c",
+        "2c Ac Ad 3s Ah", "Ac Ad Ah 3s 2c",
+        "2c Ac Ad Ah 3s", "Ac Ad Ah 3s 2c",
+        "Ac 2c 3s Ad Ah", "Ac Ad Ah 3s 2c",
+        "Ac 2c Ad 3s Ah", "Ac Ad Ah 3s 2c",
+        "Ac 2c Ad Ah 3s", "Ac Ad Ah 3s 2c",
+        "Ac Ad 2c 3s Ah", "Ac Ad Ah 3s 2c",
+        "Ac Ad 2c Ah 3s", "Ac Ad Ah 3s 2c",
+        "Ac Ad Ah 2c 3s", "Ac Ad Ah 3s 2c",
+
+        "3c 2s Ac Ad Ah", "Ac Ad Ah 3s 2c",
+        "3c Ac 2s Ad Ah", "Ac Ad Ah 3s 2c",
+        "3c Ac Ad 2s Ah", "Ac Ad Ah 3s 2c",
+        "3c Ac Ad Ah 2s", "Ac Ad Ah 3s 2c",
+        "Ac 3c 2s Ad Ah", "Ac Ad Ah 3s 2c",
+        "Ac 3c Ad 2s Ah", "Ac Ad Ah 3s 2c",
+        "Ac 3c Ad Ah 2s", "Ac Ad Ah 3s 2c",
+        "Ac Ad 3c 2s Ah", "Ac Ad Ah 3s 2c",
+        "Ac Ad 3c Ah 2s", "Ac Ad Ah 3s 2c",
+        "Ac Ad Ah 3c 2s", "Ac Ad Ah 3s 2c",
+
         NULL,
     };
 
@@ -297,6 +345,7 @@ CuSuite* HandUtilSuite() {
     SUITE_ADD_TEST(suite, TestHandClassifyTwoPair);
     SUITE_ADD_TEST(suite, TestHandClassifyPair);
     SUITE_ADD_TEST(suite, TestHandClassifyHighCard);
+    SUITE_ADD_TEST(suite, TestHandSort);
 
     return suite;
 }
