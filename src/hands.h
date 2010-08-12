@@ -2,6 +2,7 @@
 
 #define _HANDS_H
 
+#include <stddef.h>
 #include <stdbool.h>
 
 #include "cards.h"
@@ -16,6 +17,7 @@ typedef enum {
 
 
 HandType HandClassify(const Card*);
+void     HandSort(Card*);
 
 bool HandIsStraightFlush(const Card*);
 bool HandIsFourOfAKind(const Card*);

@@ -259,6 +259,32 @@ void TestHandClassifyHighCard(CuTest* tc) {
 }
 
 
+void TestHandSort(CuTest* tc) {
+    Card hand1[5];
+    Card hand2[5];
+    char output[OUTPUT_LENGTH];
+
+    const char *hands[] = {
+        "2c Ac Ad Ah As", "Ac Ad Ah As 2c",
+        NULL,
+    };
+
+    for (size_t i = 0; hands[i] != NULL; i += 2) {
+        snprintf(output, OUTPUT_LENGTH, "[%s] != [%s]", hands[i], hands[i+1]);
+        NewHandFromString(hands[i], hand1);
+        NewHandFromString(hands[i+1], hand2);
+        HandSort(hand1);
+        CuAssert(tc, output,
+                 CardCompare(&hand1[0], &hand2[0]) == 0 &&
+                 CardCompare(&hand1[1], &hand2[1]) == 0 &&
+                 CardCompare(&hand1[2], &hand2[2]) == 0 &&
+                 CardCompare(&hand1[3], &hand2[3]) == 0 &&
+                 CardCompare(&hand1[4], &hand2[4]) == 0);
+
+    }
+}
+
+
 CuSuite* HandUtilSuite() {
     CuSuite* suite = CuSuiteNew();
 

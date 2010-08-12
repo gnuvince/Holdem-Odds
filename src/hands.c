@@ -1,5 +1,7 @@
+#include <stdlib.h>
 #include <stdbool.h>
 
+#include "bucket.h"
 #include "cards.h"
 #include "hands.h"
 
@@ -25,6 +27,53 @@ int HandCompare(const Card* hand1, const Card* hand2) {
     return 0;
 }
 
+
+static int compare_bucket(const Bucket* a, const Bucket* b) {
+    int length_diff = BucketLength(b) - BucketLength(a);
+    if (length_diff != 0)
+        return length_diff;
+    else if (BucketLength(a) == 0 && BucketLength(b) == 0)
+        return 0;
+    else {
+        return CardCompare((const Card*) &b[0],
+                           (const Card*) &a[0]);
+    }
+}
+
+
+
+/*
+ * Sort the cards by the number of cards of the same
+ * rank that appear in the hand and then by rank from
+ * strongest to weakest.
+ */
+void HandSort(Card* hand) {
+    // We need 13 buckets
+    Bucket buckets[RANKS_PER_DECK];
+
+    // Initialize the count of all buckets to 0 (otherwise,
+    // BucketAdd will misbehave).
+    for (size_t i = 0; i < RANKS_PER_DECK; ++i)
+        buckets[i].count = 0;
+
+    // Copy the cards into the buckets.
+    for (size_t i = 0; i < HAND_LENGTH; ++i) {
+        size_t bucket_index = hand[i].rank - 1;
+        BucketAdd(&buckets[bucket_index], &hand[i]);
+    }
+
+    // Do the sorting
+    qsort(buckets, 13, sizeof(Bucket), (__compar_fn_t) &compare_bucket);
+
+    // Re-order the cards in the hand.
+    size_t index = 0;
+    for (size_t i = 0; i < RANKS_PER_DECK; ++i) {
+        for (size_t j = 0; j < buckets[i].count; ++j) {
+            hand[index] = buckets[i].cards[j];
+            index++;
+        }
+    }
+}
 
 
 
