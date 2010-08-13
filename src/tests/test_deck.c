@@ -21,8 +21,16 @@ void TestDeckShuffle(CuTest* tc) {
         }
     }
 
-    // There's a 1/52! chance that this test will fail; we'll take that chance.
     DeckShuffle(deck2, CARDS_PER_DECK);
+
+    // Make sure all the cards are valid
+    for (size_t i = 0; i < CARDS_PER_DECK; ++i) {
+        char s[3];
+        CardToString(s, &deck2[i]);
+        CuAssert(tc, s, CardIsValid(&deck2[i]));
+    }
+
+    // There's a 1/52! chance that this test will fail; we'll take that chance.
     bool decks_differ = false;
     for (size_t i = 0; i < CARDS_PER_DECK; ++i) {
         if (CardCompare(&deck1[i], &deck2[i]) != 0) {
@@ -31,6 +39,8 @@ void TestDeckShuffle(CuTest* tc) {
         }
     }
     CuAssert(tc, "deck2 was not shuffled", decks_differ);
+
+
 }
 
 

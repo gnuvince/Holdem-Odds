@@ -191,7 +191,7 @@ bool HandIsThreeOfAKind(const Card* cards) {
         if (cards[i].rank != cards[0].rank)
             return false;
 
-    return cards[3].rank != cards[4].rank;
+    return true;
 }
 
 
