@@ -37,6 +37,9 @@ bool      CardIsValid(const Card *);
 Rank      CharToRank(char);
 Suit      CharToSuit(char);
 int       CardCompare(const Card*, const Card*);
+bool      CardEqual(const Card*, const Card*);
 void      CardToString(char *, const Card*);
+void      CardSwap(Card*, Card*);
+
 
 #endif

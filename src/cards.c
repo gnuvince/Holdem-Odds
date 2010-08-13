@@ -89,6 +89,14 @@ int CardCompare(const Card* a, const Card* b) {
 
 
 /*
+ * Return whether two cards have the same rank and suit.
+ */
+bool CardEqual(const Card* a, const Card* b) {
+    return a->rank == b->rank && a->suit == b->suit;
+}
+
+
+/*
  * Convert a card to its 2-char string representation.
  */
 void CardToString(char* out, const Card* c) {
@@ -112,3 +120,20 @@ bool CardIsValid(const Card* c) {
     return (c->rank >= Deuce && c->rank <= Ace &&
             c->suit >= Club  && c->suit <= Spade);
 }
+
+
+/*
+ * Swap two cards.
+ */
+void CardSwap(Card* a, Card* b) {
+    Card t = *a;
+
+    a->rank = b->rank;
+    a->suit = b->suit;
+
+    b->rank = t.rank;
+    b->suit = t.suit;
+}
+
+
+

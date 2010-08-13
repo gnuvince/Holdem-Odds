@@ -37,7 +37,8 @@ static int compare_bucket(const Bucket* a, const Bucket* b) {
     else if (BucketLength(a) == 0 && BucketLength(b) == 0)
         return 0;
     else {
-        return CardCompare((const Card*) &b[0], (const Card*) &a[0]);
+        int c = CardCompare((const Card*) &b[0], (const Card*) &a[0]);
+        return c;
     }
 }
 

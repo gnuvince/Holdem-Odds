@@ -260,6 +260,18 @@ void TestCardCompareGreater(CuTest* tc) {
 }
 
 
+void TestCardSwap(CuTest* tc) {
+    Card c1 = NewCard(Ace, Spade);
+    Card c2 = NewCard(King, Heart);
+
+    CardSwap(&c1, &c2);
+    CuAssert(tc, "Swap didn't work", c1.rank == King);
+    CuAssert(tc, "Swap didn't work", c1.suit == Heart);
+    CuAssert(tc, "Swap didn't work", c2.rank == Ace);
+    CuAssert(tc, "Swap didn't work", c2.suit == Spade);
+}
+
+
 CuSuite* CardUtilSuite() {
     CuSuite* suite = CuSuiteNew();
 
@@ -272,6 +284,7 @@ CuSuite* CardUtilSuite() {
     SUITE_ADD_TEST(suite, TestCardCompareEqual);
     SUITE_ADD_TEST(suite, TestCardCompareLess);
     SUITE_ADD_TEST(suite, TestCardCompareGreater);
+    SUITE_ADD_TEST(suite, TestCardSwap);
 
     return suite;
 }
