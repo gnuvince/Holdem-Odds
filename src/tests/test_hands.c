@@ -337,6 +337,7 @@ void TestHandCompare(CuTest* tc) {
     Card hand1[5];
     Card hand2[5];
     char output[OUTPUT_LENGTH];
+    char output2[OUTPUT_LENGTH];
 
     const char *hands[] = {
         // Royal flush
@@ -427,11 +428,12 @@ void TestHandCompare(CuTest* tc) {
         HandSort(hand1);
         HandSort(hand2);
 
-        snprintf(output, OUTPUT_LENGTH, "[%s] < [%s]", hands[i], hands[i+1]);
+        snprintf(output, OUTPUT_LENGTH, "[%s] should be greater than [%s]", hands[i], hands[i+1]);
+        snprintf(output2, OUTPUT_LENGTH, "[%s] should be equal to [%s]", hands[i], hands[i+1]);
         CuAssert(tc, output, HandCompare(hand1, hand2) > 0);
         CuAssert(tc, output, HandCompare(hand2, hand1) < 0);
-        CuAssert(tc, output, HandCompare(hand1, hand1) == 0);
-        CuAssert(tc, output, HandCompare(hand2, hand2) == 0);
+        CuAssert(tc, output2, HandCompare(hand1, hand1) == 0);
+        CuAssert(tc, output2, HandCompare(hand2, hand2) == 0);
     }
 }
 
