@@ -333,6 +333,110 @@ void TestHandSort(CuTest* tc) {
 }
 
 
+void TestHandCompare(CuTest* tc) {
+    Card hand1[5];
+    Card hand2[5];
+    char output[OUTPUT_LENGTH];
+
+    const char *hands[] = {
+        // Royal flush
+        "Ts Js Qs Ks As", "9s Ts Js Qs Ks", // vs straight flush
+        "Ts Js Qs Ks As", "As Ad Ks Ah Ac", // vs quads
+        "Ts Js Qs Ks As", "As Ad Ks Kc Ah", // vs full house
+        "Ts Js Qs Ks As", "As 3s 5s 7s 8s", // vs flush
+        "Ts Js Qs Ks As", "3s 4d 5h 6c 7s", // vs straight
+        "Ts Js Qs Ks As", "As 2d Ac 3h Ah", // vs trips
+        "Ts Js Qs Ks As", "As Ks Ad Kd 3h", // vs two pair
+        "Ts Js Qs Ks As", "As 2d 3h 4c Ac", // vs pair
+        "Ts Js Qs Ks As", "As 9d 8h 3s 2s", // vs high card
+
+        // Quads
+        "Ac Ad Ah As Ks", "Ac Ad Ah As Qs", // vs quads, lesser kicker
+        "Ac Ad Ah As Ks", "Kc Kd Kh Ks As", // vs quads, lesser quads
+        "Ac Ad Ah As Ks", "As Ad Ks Kc Ah", // vs full house
+        "Ac Ad Ah As Ks", "As 3s 5s 7s 8s", // vs flush
+        "Ac Ad Ah As Ks", "3s 4d 5h 6c 7s", // vs straight
+        "Ac Ad Ah As Ks", "As 2d Ac 3h Ah", // vs trips
+        "Ac Ad Ah As Ks", "As Ks Ad Kd 3h", // vs two pair
+        "Ac Ad Ah As Ks", "As 2d 3h 4c Ac", // vs pair
+        "Ac Ad Ah As Ks", "As 9d 8h 3s 2s", // vs high card
+
+        // Full house
+        "Ac Ad Ah Kd Ks", "Ac Ad Ah Qd Qs", // vs full house, lesser twos
+        "Ac Ad Ah Kd Ks", "Qc Qd Qh Ac Ad", // vs full house, lesser threes
+        "Ac Ad Ah Kd Ks", "As 3s 5s 7s 8s", // vs flush
+        "Ac Ad Ah Kd Ks", "3s 4d 5h 6c 7s", // vs straight
+        "Ac Ad Ah Kd Ks", "As 2d Ac 3h Ah", // vs trips
+        "Ac Ad Ah Kd Ks", "As Ks Ad Kd 3h", // vs two pair
+        "Ac Ad Ah Kd Ks", "As 2d 3h 4c Ac", // vs pair
+        "Ac Ad Ah Kd Ks", "As 9d 8h 3s 2s", // vs high card
+
+        // Flush
+        "Ac Qc Tc 8c 6c", "Ac Qc Tc 8c 5c", // vs lesser flush 1
+        "Ac Qc Tc 8c 6c", "Ac Qc Tc 7c 6c", // vs lesser flush 2
+        "Ac Qc Tc 8c 6c", "Ac Qc 9c 8c 6c", // vs lesser flush 3
+        "Ac Qc Tc 8c 6c", "Ac Jc Tc 8c 6c", // vs lesser flush 4
+        "Ac Qc Tc 8c 6c", "Kc Qc Tc 8c 6c", // vs lesser flush 5
+        "Ac Qc Tc 8c 6c", "3s 4d 5h 6c 7s", // vs straight
+        "Ac Qc Tc 8c 6c", "As 2d Ac 3h Ah", // vs trips
+        "Ac Qc Tc 8c 6c", "As Ks Ad Kd 3h", // vs two pair
+        "Ac Qc Tc 8c 6c", "As 2d 3h 4c Ac", // vs pair
+        "Ac Qc Tc 8c 6c", "As 9d 8h 3s 2s", // vs high card
+
+        // Straight
+        "Ac Kd Qh Js Tc", "Kd Qh Js Tc 9d", // vs lesser straight
+        "Ac Kd Qh Js Tc", "As 2d Ac 3h Ah", // vs trips
+        "Ac Kd Qh Js Tc", "As Ks Ad Kd 3h", // vs two pair
+        "Ac Kd Qh Js Tc", "As 2d 3h 4c Ac", // vs pair
+        "Ac Kd Qh Js Tc", "As 9d 8h 3s 2s", // vs high card
+
+        // Trips
+        "As Ac Ah Jh 8d", "As Ac Ah Jh 7d", // vs trips, lesser kicker 1
+        "As Ac Ah Jh 8d", "As Ac Ah Th 8d", // vs trips, lesser kicker 2
+        "As Ac Ah Jh 8d", "Ks Kc Kh Ah Qd", // vs trips, lesser three cards
+        "As Ac Ah Jh 8d", "As Ks Ad Kd 3h", // vs two pair
+        "As Ac Ah Jh 8d", "As 2d 3h 4c Ac", // vs pair
+        "As Ac Ah Jh 8d", "As 9d 8h 3s 2s", // vs high card
+
+        // Two pair
+        "Ac Ad Jh Js 8s", "Ac Ad Jh Js 7s", // vs two pair, lesser kicker
+        "Ac Ad Jh Js 8s", "Ac Ad Th Ts Qs", // vs two pair, lesser low pair
+        "Ac Ad Jh Js 8s", "Kc Kd Jh Js Qs", // vs two pair, lesser high pair
+        "Ac Ad Jh Js 8s", "As 2d 3h 4c Ac", // vs pair
+        "Ac Ad Jh Js 8s", "As 9d 8h 3s 2s", // vs high card
+
+        // Pair
+        "Ac Ad Qh 8s 4c", "Ac Ad Qh 8s 3c", // vs pair, lesser kicker 1
+        "Ac Ad Qh 8s 4c", "Ac Ad Qh 7s 4c", // vs pair, lesser kicker 2
+        "Ac Ad Qh 8s 4c", "Ac Ad Jh 8s 4c", // vs pair, lesser kicker 3
+        "Ac Ad Qh 8s 4c", "Kc Kd Qh 8s 4c", // vs pair, lesser pair
+        "Ac Ad Qh 8s 4c", "As 9d 8h 3s 2s", // vs high card
+
+        // High card
+        "Ac Qd Th 8s 6c", "Ac Qd Th 8s 5c", // vs high card, lesser kicker 1
+        "Ac Qd Th 8s 6c", "Ac Qd Th 7s 6c", // vs high card, lesser kicker 2
+        "Ac Qd Th 8s 6c", "Ac Qd 9h 8s 6c", // vs high card, lesser kicker 3
+        "Ac Qd Th 8s 6c", "Ac Jd Th 8s 6c", // vs high card, lesser kicker 4
+        "Ac Qd Th 8s 6c", "Kc Qd Th 8s 6c", // vs high card, lesser kicker 5
+        NULL,
+    };
+
+    for (size_t i = 0; hands[i] != NULL; i += 2) {
+        NewHandFromString(hands[i], hand1);
+        NewHandFromString(hands[i+1], hand2);
+        HandSort(hand1);
+        HandSort(hand2);
+
+        snprintf(output, OUTPUT_LENGTH, "[%s] < [%s]", hands[i], hands[i+1]);
+        CuAssert(tc, output, HandCompare(hand1, hand2) > 0);
+        CuAssert(tc, output, HandCompare(hand2, hand1) < 0);
+        CuAssert(tc, output, HandCompare(hand1, hand1) == 0);
+        CuAssert(tc, output, HandCompare(hand2, hand2) == 0);
+    }
+}
+
+
+
 CuSuite* HandUtilSuite() {
     CuSuite* suite = CuSuiteNew();
 
@@ -346,6 +450,7 @@ CuSuite* HandUtilSuite() {
     SUITE_ADD_TEST(suite, TestHandClassifyPair);
     SUITE_ADD_TEST(suite, TestHandClassifyHighCard);
     SUITE_ADD_TEST(suite, TestHandSort);
+    SUITE_ADD_TEST(suite, TestHandCompare);
 
     return suite;
 }

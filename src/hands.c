@@ -8,9 +8,9 @@
 
 /*
  * Compare two hands and return:
- *   < 0 if hand1 > hand2
+ *   < 0 if hand1 < hand2
  *     0 if hand1 = hand2
- *   > 0 if hand1 < hand2
+ *   > 0 if hand1 > hand2
  */
 int HandCompare(const Card* hand1, const Card* hand2) {
     int diff = HandClassify(hand1) - HandClassify(hand2);
@@ -28,6 +28,8 @@ int HandCompare(const Card* hand1, const Card* hand2) {
 }
 
 
+
+/* Callback for HandSort */
 static int compare_bucket(const Bucket* a, const Bucket* b) {
     int length_diff = BucketLength(b) - BucketLength(a);
     if (length_diff != 0)
@@ -35,8 +37,7 @@ static int compare_bucket(const Bucket* a, const Bucket* b) {
     else if (BucketLength(a) == 0 && BucketLength(b) == 0)
         return 0;
     else {
-        return CardCompare((const Card*) &b[0],
-                           (const Card*) &a[0]);
+        return CardCompare((const Card*) &b[0], (const Card*) &a[0]);
     }
 }
 
@@ -63,7 +64,8 @@ void HandSort(Card* hand) {
     }
 
     // Do the sorting
-    qsort(buckets, 13, sizeof(Bucket), (__compar_fn_t) &compare_bucket);
+    qsort(buckets, RANKS_PER_DECK, sizeof(Bucket),
+          (__compar_fn_t) &compare_bucket);
 
     // Re-order the cards in the hand.
     size_t index = 0;
@@ -136,7 +138,7 @@ bool HandIsFourOfAKind(const Card* cards) {
  */
 bool HandIsFullHouse(const Card* cards) {
     // Make sure the first three cards are three of a kind.
-    for (int i = i; i < 3; ++i)
+    for (int i = 1; i < 3; ++i)
         if (cards[i].rank != cards[0].rank)
             return false;
 
@@ -184,7 +186,7 @@ bool HandIsStraight(const Card* cards) {
  */
 bool HandIsThreeOfAKind(const Card* cards) {
     // Make sure the first three cards are three of a kind.
-    for (int i = 0; i < 3; ++i)
+    for (int i = 1; i < 3; ++i)
         if (cards[i].rank != cards[0].rank)
             return false;
 
