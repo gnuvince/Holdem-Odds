@@ -27,7 +27,11 @@ int HandCompare(const Card* hand1, const Card* hand2) {
 }
 
 
-
+/*
+ * Sort the cards by the number of cards of the same
+ * rank that appear in the hand and then by rank from
+ * strongest to weakest.
+ */
 void HandSort(Card* hand) {
     Bucket buckets[RANKS_PER_DECK];
 
