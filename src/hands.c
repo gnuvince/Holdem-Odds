@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <stdbool.h>
 
 #include "bucket.h"
@@ -29,28 +28,7 @@ int HandCompare(const Card* hand1, const Card* hand2) {
 
 
 
-/* Callback for HandSort */
-static int compare_bucket(const Bucket* a, const Bucket* b) {
-    int length_diff = BucketLength(b) - BucketLength(a);
-    if (length_diff != 0)
-        return length_diff;
-    else if (BucketLength(a) == 0 && BucketLength(b) == 0)
-        return 0;
-    else {
-        int c = CardCompare((const Card*) &b[0], (const Card*) &a[0]);
-        return c;
-    }
-}
-
-
-
-/*
- * Sort the cards by the number of cards of the same
- * rank that appear in the hand and then by rank from
- * strongest to weakest.
- */
 void HandSort(Card* hand) {
-    // We need 13 buckets
     Bucket buckets[RANKS_PER_DECK];
 
     // Initialize the count of all buckets to 0 (otherwise,
@@ -64,16 +42,22 @@ void HandSort(Card* hand) {
         BucketAdd(&buckets[bucket_index], &hand[i]);
     }
 
-    // Do the sorting
-    qsort(buckets, RANKS_PER_DECK, sizeof(Bucket),
-          (__compar_fn_t) &compare_bucket);
+    size_t index = 0; // Index of the next card to insert in hand
 
-    // Re-order the cards in the hand.
-    size_t index = 0;
-    for (size_t i = 0; i < RANKS_PER_DECK; ++i) {
-        for (size_t j = 0; j < buckets[i].count; ++j) {
-            hand[index] = buckets[i].cards[j];
-            index++;
+    // Search for buckets with 4 cards first, then 3, 2 and 1.
+    for (size_t count = 4; count > 0; --count) {
+
+        // Go from the highest rank to the lowest rank when inserting into hand
+        for (size_t j = RANKS_PER_DECK - 1; j != (size_t)-1; --j) {
+
+            // If the number of cards in the bucket matches the number
+            // we're looking for, insert them into the hand.
+            if (buckets[j].count == count) {
+                for (size_t i = 0; i < count; ++i) {
+                    hand[index] = buckets[j].cards[i];
+                    index++;
+                }
+            }
         }
     }
 }

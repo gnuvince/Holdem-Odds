@@ -273,11 +273,11 @@ void TestHandSort(CuTest* tc) {
         "Js Qs Ks As Ts", "As Ks Qs Js Ts",
 
         // Quads
-        "2c Ac Ad Ah As", "Ac Ad Ah As 2c",
-        "Ac 2c Ad Ah As", "Ac Ad Ah As 2c",
-        "Ad Ac 2c Ah As", "Ac Ad Ah As 2c",
-        "Ac Ad Ah 2c As", "Ac Ad Ah As 2c",
-        "Ac Ad Ah As 2c", "Ac Ad Ah As 2c",
+        "Kc 8c 8d 8h 8s", "8c 8d 8h 8s Kc",
+        "8c Kc 8d 8h 8s", "8c 8d 8h 8s Kc",
+        "8d 8c Kc 8h 8s", "8c 8d 8h 8s Kc",
+        "8c 8d 8h Kc 8s", "8c 8d 8h 8s Kc",
+        "8c 8d 8h 8s Kc", "8c 8d 8h 8s Kc",
 
         // Full house
         "2c 2s Ac Ad Ah", "Ac Ad Ah 2s 2c",
@@ -290,6 +290,17 @@ void TestHandSort(CuTest* tc) {
         "Ac Ad 2c 2s Ah", "Ac Ad Ah 2s 2c",
         "Ac Ad 2c Ah 2s", "Ac Ad Ah 2s 2c",
         "Ac Ad Ah 2c 2s", "Ac Ad Ah 2s 2c",
+
+        "Kc Ks 3c 3d 3h", "3c 3d 3h Ks Kc",
+        "Kc 3c Ks 3d 3h", "3c 3d 3h Ks Kc",
+        "Kc 3c 3d Ks 3h", "3c 3d 3h Ks Kc",
+        "Kc 3c 3d 3h Ks", "3c 3d 3h Ks Kc",
+        "3c Kc Ks 3d 3h", "3c 3d 3h Ks Kc",
+        "3c Kc 3d Ks 3h", "3c 3d 3h Ks Kc",
+        "3c Kc 3d 3h Ks", "3c 3d 3h Ks Kc",
+        "3c 3d Kc Ks 3h", "3c 3d 3h Ks Kc",
+        "3c 3d Kc 3h Ks", "3c 3d 3h Ks Kc",
+        "3c 3d 3h Kc Ks", "3c 3d 3h Ks Kc",
 
         // Trips
         "2c 3s Ac Ad Ah", "Ac Ad Ah 3s 2c",
