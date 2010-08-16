@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <string.h>
 
 #include "bucket.h"
 #include "cards.h"
@@ -57,10 +58,8 @@ void HandSort(Card* hand) {
             // If the number of cards in the bucket matches the number
             // we're looking for, insert them into the hand.
             if (buckets[j].count == count) {
-                for (size_t i = 0; i < count; ++i) {
-                    hand[index] = buckets[j].cards[i];
-                    index++;
-                }
+                memmove(&hand[index], buckets[j].cards, sizeof(Card) * count);
+                index += count;
             }
         }
     }
