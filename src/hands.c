@@ -58,7 +58,7 @@ void HandSort(Card* hand) {
             // If the number of cards in the bucket matches the number
             // we're looking for, insert them into the hand.
             if (buckets[j].count == count) {
-                memcpy(&hand[index], buckets[j].cards, sizeof(Card) * count);
+                memcpy(&hand[index], &buckets[j].cards, sizeof(Card) * count);
                 index += count;
             }
         }
