@@ -112,7 +112,7 @@ bool HandIsStraightFlush(const Card* cards) {
  * Four of a kind is when 4 of the 5 cards have the same rank.
  */
 bool HandIsFourOfAKind(const Card* cards) {
-    for (int i = 1; i < HAND_LENGTH - 1; ++i)
+    for (size_t i = 1; i < HAND_LENGTH - 1; ++i)
         if (cards[i].rank != cards[0].rank)
             return false;
 
@@ -126,7 +126,7 @@ bool HandIsFourOfAKind(const Card* cards) {
  */
 bool HandIsFullHouse(const Card* cards) {
     // Make sure the first three cards are three of a kind.
-    for (int i = 1; i < 3; ++i)
+    for (size_t i = 1; i < 3; ++i)
         if (cards[i].rank != cards[0].rank)
             return false;
 
@@ -152,18 +152,17 @@ bool HandIsFlush(const Card* cards) {
  * or precede a Deuce.
  */
 bool HandIsStraight(const Card* cards) {
-    if (cards[0].rank == Five) {
-        for (int i = 1; i < HAND_LENGTH - 1; ++i)
+    if (cards[4].rank == Deuce) {
+        for (size_t i = 2; i < HAND_LENGTH; ++i)
             if (cards[i].rank + 1 != cards[i - 1].rank)
                 return false;
-        return cards[4].rank == Ace;
+        return cards[0].rank == Ace || cards[0].rank == Six;
     }
     else {
-        for (int i = 1; i < HAND_LENGTH; ++i)
+        for (size_t i = 1; i < HAND_LENGTH; ++i)
             if (cards[i].rank + 1 != cards[i - 1].rank)
                 return false;
         return true;
-
     }
 }
 
@@ -174,7 +173,7 @@ bool HandIsStraight(const Card* cards) {
  */
 bool HandIsThreeOfAKind(const Card* cards) {
     // Make sure the first three cards are three of a kind.
-    for (int i = 1; i < 3; ++i)
+    for (size_t i = 1; i < 3; ++i)
         if (cards[i].rank != cards[0].rank)
             return false;
 

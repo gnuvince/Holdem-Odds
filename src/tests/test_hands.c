@@ -38,7 +38,7 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
         "8s 7s 6s 5s 4s",
         "7s 6s 5s 4s 3s",
         "6s 5s 4s 3s 2s",
-        "5s 4s 3s 2s As",
+        "As 5s 4s 3s 2s",
         NULL
     };
     for (size_t i = 0; straight_flushes[i] != NULL; ++i) {
@@ -129,7 +129,7 @@ void TestHandClassifyStraight(CuTest* tc) {
     Card hand[5];
     char output[OUTPUT_LENGTH];
     const char *straights[] = {
-        "5c 4s 3h 2d Ac",
+        "Ac 5c 4s 3h 2d",
         "6s 5c 4s 3h 2d",
         "7d 6s 5c 4s 3h",
         "8h 7d 6s 5c 4s",
