@@ -152,18 +152,25 @@ bool HandIsFlush(const Card* cards) {
  * or precede a Deuce.
  */
 bool HandIsStraight(const Card* cards) {
-    if (cards[4].rank == Deuce) {
-        for (size_t i = 2; i < HAND_LENGTH; ++i)
-            if (cards[i].rank + 1 != cards[i - 1].rank)
-                return false;
-        return cards[0].rank == Ace || cards[0].rank == Six;
+    bool isStraight = true;
+
+    // Search for a "normal" straight.
+    for (size_t i = 1; i < HAND_LENGTH; ++i) {
+        if (cards[i].rank + 1 != cards[i - 1].rank) {
+            isStraight = false;
+            break;
+        }
     }
-    else {
-        for (size_t i = 1; i < HAND_LENGTH; ++i)
-            if (cards[i].rank + 1 != cards[i - 1].rank)
-                return false;
+
+    if (isStraight)
         return true;
-    }
+
+    // If a "normal" straight was not found, test for a wheel.
+    return cards[0].rank == Ace
+        && cards[1].rank == Five
+        && cards[2].rank == Four
+        && cards[3].rank == Trey
+        && cards[4].rank == Deuce;
 }
 
 
