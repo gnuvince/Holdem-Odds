@@ -362,6 +362,17 @@ void TestHandCompare(CuTest* tc) {
         "Ts Js Qs Ks As", "As 2d 3h 4c Ac", // vs pair
         "Ts Js Qs Ks As", "As 9d 8h 3s 2s", // vs high card
 
+        // All straight flushes are stronger than the wheel flush
+        "Ac Kc Qc Jc Tc", "5c 4c 3c 2c Ac",
+        "Kc Qc Jc Tc 9c", "5c 4c 3c 2c Ac",
+        "Qc Jc Tc 9c 8c", "5c 4c 3c 2c Ac",
+        "Jc Tc 9c 8c 7c", "5c 4c 3c 2c Ac",
+        "Tc 9c 8c 7c 6c", "5c 4c 3c 2c Ac",
+        "9c 8c 7c 6c 5c", "5c 4c 3c 2c Ac",
+        "8c 7c 6c 5c 4c", "5c 4c 3c 2c Ac",
+        "7c 6c 5c 4c 3c", "5c 4c 3c 2c Ac",
+        "6c 5c 4c 3c 2c", "5c 4c 3c 2c Ac",
+
         // Quads
         "Ac Ad Ah As Ks", "Ac Ad Ah As Qs", // vs quads, lesser kicker
         "Ac Ad Ah As Ks", "Kc Kd Kh Ks As", // vs quads, lesser quads
@@ -401,6 +412,17 @@ void TestHandCompare(CuTest* tc) {
         "Ac Kd Qh Js Tc", "As Ks Ad Kd 3h", // vs two pair
         "Ac Kd Qh Js Tc", "As 2d 3h 4c Ac", // vs pair
         "Ac Kd Qh Js Tc", "As 9d 8h 3s 2s", // vs high card
+
+        // All straights are stronger than a wheel
+        "Ac Kd Qh Js Tc", "5d 4h 3s 2c Ac",
+        "Kd Qh Js Tc 9d", "5d 4h 3s 2c Ac",
+        "Qh Js Tc 9d 8h", "5d 4h 3s 2c Ac",
+        "Js Tc 9d 8h 7s", "5d 4h 3s 2c Ac",
+        "Tc 9d 8h 7s 6s", "5d 4h 3s 2c Ac",
+        "9d 8h 7s 6s 5c", "5d 4h 3s 2c Ac",
+        "8h 7s 6s 5c 4d", "5d 4h 3s 2c Ac",
+        "7s 6s 5c 4d 3h", "5d 4h 3s 2c Ac",
+        "6s 5c 4d 3h 2s", "5d 4h 3s 2c Ac",
 
         // Trips
         "As Ac Ah Jh 8d", "As Ac Ah Jh 7d", // vs trips, lesser kicker 1

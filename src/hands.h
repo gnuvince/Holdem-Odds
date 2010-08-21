@@ -24,6 +24,7 @@ bool HandIsFourOfAKind(const Card*);
 bool HandIsFullHouse(const Card*);
 bool HandIsFlush(const Card*);
 bool HandIsStraight(const Card*);
+bool HandIsWheel(const Card*);
 bool HandIsThreeOfAKind(const Card*);
 bool HandIsTwoPair(const Card*);
 bool HandIsPair(const Card*);

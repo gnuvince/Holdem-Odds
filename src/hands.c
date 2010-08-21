@@ -13,12 +13,36 @@
  *   > 0 if hand1 > hand2
  */
 int HandCompare(const Card* hand1, const Card* hand2) {
-    int diff = HandClassify(hand1) - HandClassify(hand2);
+    HandType hand1_type = HandClassify(hand1);
+    HandType hand2_type = HandClassify(hand2);
+    int diff = hand1_type - hand2_type;
 
     if (diff != 0)
         return diff;
 
     // Tie breaker when two hands of the same type.
+
+    // Straights and straight flushes are trickier to test for
+    // equality because of wheels.  So we have the following
+    // procedure:
+    //   If both hands are wheels, they are equal (0)
+    //   If hand1 is a wheel, hand2 is better (-1)
+    //   If hand2 is a wheel, hand1 is better (1)
+    if (hand1_type == StraightFlush || hand1_type == Straight) {
+        bool hand1_wheel = HandIsWheel(hand1);
+        bool hand2_wheel = HandIsWheel(hand2);
+        if (hand1_wheel && hand2_wheel)
+            return 0;
+        if (hand1_wheel)
+            return -1;
+        if (hand2_wheel)
+            return 1;
+    }
+
+    // If neither hand is a wheel, find the strongest
+    // hand by going one card after the other.  This
+    // works for all types of hands when wheels are
+    // excluded.
     for (int i = 0; i < HAND_LENGTH; ++i) {
         int cmp = CardCompare(&hand1[i], &hand2[i]);
         if (cmp != 0)
@@ -166,11 +190,19 @@ bool HandIsStraight(const Card* cards) {
         return true;
 
     // If a "normal" straight was not found, test for a wheel.
-    return cards[0].rank == Ace
-        && cards[1].rank == Five
-        && cards[2].rank == Four
-        && cards[3].rank == Trey
-        && cards[4].rank == Deuce;
+    return HandIsWheel(cards);
+}
+
+
+/*
+ * A wheel is a straight from A to 5
+ */
+bool HandIsWheel(const Card* cards) {
+       return cards[0].rank == Ace
+           && cards[1].rank == Five
+           && cards[2].rank == Four
+           && cards[3].rank == Trey
+           && cards[4].rank == Deuce;
 }
 
 

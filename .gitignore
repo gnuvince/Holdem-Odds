@@ -1,3 +1,4 @@
 *.o
 holdemodds
 src/tests/all_tests
+scrap/
