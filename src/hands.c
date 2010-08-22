@@ -43,7 +43,7 @@ int HandCompare(const Card* hand1, const Card* hand2) {
     // hand by going one card after the other.  This
     // works for all types of hands when wheels are
     // excluded.
-    for (int i = 0; i < HAND_LENGTH; ++i) {
+    for (size_t i = 0; i < HAND_LENGTH; ++i) {
         int cmp = CardCompare(&hand1[i], &hand2[i]);
         if (cmp != 0)
             return cmp;
@@ -136,11 +136,9 @@ bool HandIsStraightFlush(const Card* cards) {
  * Four of a kind is when 4 of the 5 cards have the same rank.
  */
 bool HandIsFourOfAKind(const Card* cards) {
-    for (size_t i = 1; i < HAND_LENGTH - 1; ++i)
-        if (cards[i].rank != cards[0].rank)
-            return false;
-
-    return true;
+    return cards[0].rank == cards[1].rank
+        && cards[0].rank == cards[2].rank
+        && cards[0].rank == cards[3].rank;
 }
 
 
@@ -149,12 +147,9 @@ bool HandIsFourOfAKind(const Card* cards) {
  * kind.
  */
 bool HandIsFullHouse(const Card* cards) {
-    // Make sure the first three cards are three of a kind.
-    for (size_t i = 1; i < 3; ++i)
-        if (cards[i].rank != cards[0].rank)
-            return false;
-
-    return cards[3].rank == cards[4].rank;
+    return cards[0].rank == cards[1].rank
+        && cards[0].rank == cards[2].rank
+        && cards[3].rank == cards[4].rank;
 }
 
 
@@ -211,12 +206,8 @@ bool HandIsWheel(const Card* cards) {
  * and the other two cards don't match.
  */
 bool HandIsThreeOfAKind(const Card* cards) {
-    // Make sure the first three cards are three of a kind.
-    for (size_t i = 1; i < 3; ++i)
-        if (cards[i].rank != cards[0].rank)
-            return false;
-
-    return true;
+    return cards[0].rank == cards[1].rank
+        && cards[0].rank == cards[2].rank;
 }
 
 
