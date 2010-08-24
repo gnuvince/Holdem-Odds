@@ -126,9 +126,10 @@ bool HandIsWheelFlush(const Card* cards) {
  * Four of a kind is when 4 of the 5 cards have the same rank.
  */
 bool HandIsFourOfAKind(const Card* cards) {
-    return cards[0].rank == cards[1].rank
-        && cards[0].rank == cards[2].rank
-        && cards[0].rank == cards[3].rank;
+    // If the cards are properly ordered, only in the
+    // case of quads should the first and fourth card
+    // be of the same rank.
+    return cards[0].rank == cards[3].rank;
 }
 
 
@@ -137,8 +138,10 @@ bool HandIsFourOfAKind(const Card* cards) {
  * kind.
  */
 bool HandIsFullHouse(const Card* cards) {
-    return cards[0].rank == cards[1].rank
-        && cards[0].rank == cards[2].rank
+    // If the cards are properly ordered, only in the
+    // case of a full house should the first and third
+    // card be the same and the last two cards be the same.
+    return cards[0].rank == cards[2].rank
         && cards[3].rank == cards[4].rank;
 }
 
@@ -173,8 +176,7 @@ bool HandIsStraight(const Card* cards) {
  * A wheel is a straight from A to 5
  */
 bool HandIsWheel(const Card* cards) {
-       return cards[0].rank == Ace
-           && cards[1].rank == Five;
+       return cards[0].rank == Ace && cards[1].rank == Five;
 }
 
 
@@ -183,8 +185,10 @@ bool HandIsWheel(const Card* cards) {
  * and the other two cards don't match.
  */
 bool HandIsThreeOfAKind(const Card* cards) {
-    return cards[0].rank == cards[1].rank
-        && cards[0].rank == cards[2].rank;
+    // If the cards are properly ordered and a full house
+    // wasn't found, if the first and third cards are of
+    // the same rank, we have trips.
+    return cards[0].rank == cards[2].rank;
 }
 
 
@@ -193,8 +197,10 @@ bool HandIsThreeOfAKind(const Card* cards) {
  * the same rank and the other card doesn't match.
  */
 bool HandIsTwoPair(const Card* cards) {
-    return cards[0].rank == cards[1].rank
-        && cards[2].rank == cards[3].rank;
+    // If the4 cards are properly ordered and quads
+    // haven't been found, if the third and fourth
+    // cards are of the same rank, we have two pairs.
+    return cards[2].rank == cards[3].rank;
 }
 
 
