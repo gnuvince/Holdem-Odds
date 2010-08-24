@@ -11,8 +11,3 @@ void BucketAdd(Bucket* bucket, const Card* card) {
     bucket->cards[bucket->count] = *card;
     bucket->count++;
 }
-
-
-size_t BucketLength(const Bucket* bucket) {
-    return bucket->count;
-}

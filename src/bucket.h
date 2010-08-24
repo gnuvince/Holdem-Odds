@@ -14,7 +14,6 @@ typedef struct {
 
 
 void   BucketAdd(Bucket*, const Card*);
-size_t BucketLength(const Bucket*);
 
 
 #endif
