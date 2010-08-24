@@ -127,12 +127,8 @@ bool CardIsValid(const Card* c) {
  */
 void CardSwap(Card* a, Card* b) {
     Card t = *a;
-
-    a->rank = b->rank;
-    a->suit = b->suit;
-
-    b->rank = t.rank;
-    b->suit = t.suit;
+    *a = *b;
+    *b = t;
 }
 
 

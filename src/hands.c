@@ -43,8 +43,7 @@ void HandSort(Card* hand) {
 
     // Initialize the count of all buckets to 0 (otherwise,
     // BucketAdd will misbehave).
-    for (size_t i = 0; i < RANKS_PER_DECK; ++i)
-        buckets[i].count = 0;
+    memset(buckets, 0, RANKS_PER_DECK * sizeof(Bucket));
 
     // Copy the cards into the buckets.
     for (size_t i = 0; i < HAND_LENGTH; ++i) {
