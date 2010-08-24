@@ -17,22 +17,21 @@ typedef enum {
 } HandType;
 
 
-HandType HandClassify(const Card*);
+int      HandCompare(Card*, Card*);
+HandType HandClassify(Card*);
 void     HandSort(Card*);
 
-bool HandIsStraightFlush(const Card*);
-bool HandIsWheelFlush(const Card*);
-bool HandIsFourOfAKind(const Card*);
-bool HandIsFullHouse(const Card*);
-bool HandIsFlush(const Card*);
-bool HandIsStraight(const Card*);
-bool HandIsWheel(const Card*);
-bool HandIsThreeOfAKind(const Card*);
-bool HandIsTwoPair(const Card*);
-bool HandIsPair(const Card*);
-bool HandIsHighCard(const Card*);
-
-int  HandCompare(const Card*, const Card*);
+static bool HandIsStraightFlush(const Card*);
+static bool HandIsWheelFlush(const Card*);
+static bool HandIsFourOfAKind(const Card*);
+static bool HandIsFullHouse(const Card*);
+static bool HandIsFlush(const Card*);
+static bool HandIsStraight(const Card*);
+static bool HandIsWheel(const Card*);
+static bool HandIsThreeOfAKind(const Card*);
+static bool HandIsTwoPair(const Card*);
+static bool HandIsPair(const Card*);
+static bool HandIsHighCard(const Card*);
 
 bool HandIsValid(const Card*);
 

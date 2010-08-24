@@ -46,7 +46,7 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
 
         for (Suit s = Club; s <= Spade; ++s) {
             for (size_t j = 0; j < HAND_LENGTH; ++j) { hand[j].suit = s; }
-            CuAssert(tc, output, HandClassify((const Card*)&hand) == StraightFlush);
+            CuAssert(tc, output, HandClassify(hand) == StraightFlush);
         }
     }
 }
@@ -55,7 +55,7 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
 void TestHandClassifyWheelFlush(CuTest* tc) {
     Card hand[5];
     NewHandFromString("Ac 5c 4c 3c 2c", hand);
-    CuAssert(tc, "A-5-4-3-2 should be a wheel flush", HandClassify((const Card*)&hand) == WheelFlush);
+    CuAssert(tc, "A-5-4-3-2 should be a wheel flush", HandClassify(hand) == WheelFlush);
 }
 
 void TestHandClassifyQuads(CuTest* tc) {
@@ -75,7 +75,7 @@ void TestHandClassifyQuads(CuTest* tc) {
 
                 snprintf(output, OUTPUT_LENGTH, "[%c%c%c%c%c] should be four of a kind",
                          ranks[r1], ranks[r1], ranks[r1], ranks[r1], ranks[r2]);
-                CuAssert(tc, output, HandClassify((const Card*)hand) == FourOfAKind);
+                CuAssert(tc, output, HandClassify(hand) == FourOfAKind);
             }
         }
     }
@@ -98,7 +98,7 @@ void TestHandClassifyFullHouse(CuTest* tc) {
 
             snprintf(output, OUTPUT_LENGTH, "[%c%c%c%c%c] should be a fullhouse",
                      ranks[r1], ranks[r1], ranks[r1], ranks[r2], ranks[r2]);
-            CuAssert(tc, output, HandClassify((const Card*)hand) == FullHouse);
+            CuAssert(tc, output, HandClassify(hand) == FullHouse);
         }
     }
 }
@@ -124,7 +124,7 @@ void TestHandClassifyFlush(CuTest* tc) {
         NewHandFromString(flushes[i], hand);
         for (Suit s = Club; s <= Spade; ++s) {
             for (size_t j = 0; j < HAND_LENGTH; ++j) { hand[j].suit = s; }
-            CuAssert(tc, output, HandClassify((const Card*)&hand) == Flush);
+            CuAssert(tc, output, HandClassify(hand) == Flush);
         }
     }
 }
@@ -149,14 +149,14 @@ void TestHandClassifyStraight(CuTest* tc) {
     for (size_t i = 0; straights[i] != NULL; ++i) {
         snprintf(output, OUTPUT_LENGTH, "[%s] should be a straight", straights[i]);
         NewHandFromString(straights[i], hand);
-        CuAssert(tc, output, HandClassify((const Card*)&hand) == Straight);
+        CuAssert(tc, output, HandClassify(hand) == Straight);
     }
 }
 
 void TestHandClassifyWheel(CuTest* tc) {
     Card hand[5];
     NewHandFromString("Ac 5c 4s 3h 2d", hand);
-    CuAssert(tc, "A-5-4-3-2 should be a wheel", HandClassify((const Card*)&hand) == Wheel);
+    CuAssert(tc, "A-5-4-3-2 should be a wheel", HandClassify(hand) == Wheel);
 }
 
 
@@ -179,7 +179,7 @@ void TestHandClassifyTrips(CuTest* tc) {
 
                 snprintf(output, OUTPUT_LENGTH, "[%c%c%c%c%c] should be three of a kind",
                          ranks[r1], ranks[r1], ranks[r1], ranks[r2], ranks[r3]);
-                CuAssert(tc, output, HandClassify((const Card*)hand) == ThreeOfAKind);
+                CuAssert(tc, output, HandClassify(hand) == ThreeOfAKind);
             }
         }
     }
@@ -210,7 +210,7 @@ void TestHandClassifyTwoPair(CuTest* tc) {
     for (size_t i = 0; twopairs[i] != NULL; ++i) {
         snprintf(output, OUTPUT_LENGTH, "[%s] should be a two pair", twopairs[i]);
         NewHandFromString(twopairs[i], hand);
-        CuAssert(tc, output, HandClassify((const Card*)&hand) == TwoPair);
+        CuAssert(tc, output, HandClassify(hand) == TwoPair);
     }
 }
 
@@ -237,7 +237,7 @@ void TestHandClassifyPair(CuTest* tc) {
     for (size_t i = 0; pairs[i] != NULL; ++i) {
         snprintf(output, OUTPUT_LENGTH, "[%s] should be a pair", pairs[i]);
         NewHandFromString(pairs[i], hand);
-        CuAssert(tc, output, HandClassify((const Card*)&hand) == Pair);
+        CuAssert(tc, output, HandClassify(hand) == Pair);
     }
 }
 
@@ -264,7 +264,7 @@ void TestHandClassifyHighCard(CuTest* tc) {
     for (size_t i = 0; highcards[i] != NULL; ++i) {
         snprintf(output, OUTPUT_LENGTH, "[%s] should be a high card", highcards[i]);
         NewHandFromString(highcards[i], hand);
-        CuAssert(tc, output, HandClassify((const Card*)&hand) == HighCard);
+        CuAssert(tc, output, HandClassify(hand) == HighCard);
     }
 }
 
