@@ -21,28 +21,9 @@ int HandCompare(const Card* hand1, const Card* hand2) {
         return diff;
 
     // Tie breaker when two hands of the same type.
-
-    // Straights and straight flushes are trickier to test for
-    // equality because of wheels.  So we have the following
-    // procedure:
-    //   If both hands are wheels, they are equal (0)
-    //   If hand1 is a wheel, hand2 is better (-1)
-    //   If hand2 is a wheel, hand1 is better (1)
-    if (hand1_type == StraightFlush || hand1_type == Straight) {
-        bool hand1_wheel = HandIsWheel(hand1);
-        bool hand2_wheel = HandIsWheel(hand2);
-        if (hand1_wheel && hand2_wheel)
-            return 0;
-        if (hand1_wheel)
-            return -1;
-        if (hand2_wheel)
-            return 1;
-    }
-
-    // If neither hand is a wheel, find the strongest
-    // hand by going one card after the other.  This
-    // works for all types of hands when wheels are
-    // excluded.
+    // Find the strongest hand by going card-by-card
+    // until one card is higher.  If no card is higher
+    // we have a tie.
     for (size_t i = 0; i < HAND_LENGTH; ++i) {
         int cmp = CardCompare(&hand1[i], &hand2[i]);
         if (cmp != 0)
@@ -98,10 +79,12 @@ void HandSort(Card* hand) {
  */
 HandType HandClassify(const Card* cards) {
     if (HandIsStraightFlush(cards)) return StraightFlush;
+    if (HandIsWheelFlush(cards))    return WheelFlush;
     if (HandIsFourOfAKind(cards))   return FourOfAKind;
     if (HandIsFullHouse(cards))     return FullHouse;
     if (HandIsFlush(cards))         return Flush;
     if (HandIsStraight(cards))      return Straight;
+    if (HandIsWheel(cards))         return Wheel;
     if (HandIsThreeOfAKind(cards))  return ThreeOfAKind;
     if (HandIsTwoPair(cards))       return TwoPair;
     if (HandIsPair(cards))          return Pair;
@@ -130,6 +113,13 @@ bool HandIsStraightFlush(const Card* cards) {
     return HandIsStraight(cards) && HandIsFlush(cards);
 }
 
+
+/*
+ * A wheel flush is a wheel _and_ a flush.
+ */
+bool HandIsWheelFlush(const Card* cards) {
+    return HandIsWheel(cards) && HandIsFlush(cards);
+}
 
 
 /*
@@ -171,21 +161,11 @@ bool HandIsFlush(const Card* cards) {
  * or precede a Deuce.
  */
 bool HandIsStraight(const Card* cards) {
-    bool isStraight = true;
+    for (size_t i = 1; i < HAND_LENGTH; ++i)
+        if (cards[i].rank + 1 != cards[i - 1].rank)
+            return false;
 
-    // Search for a "normal" straight.
-    for (size_t i = 1; i < HAND_LENGTH; ++i) {
-        if (cards[i].rank + 1 != cards[i - 1].rank) {
-            isStraight = false;
-            break;
-        }
-    }
-
-    if (isStraight)
-        return true;
-
-    // If a "normal" straight was not found, test for a wheel.
-    return HandIsWheel(cards);
+    return true;
 }
 
 

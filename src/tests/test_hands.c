@@ -38,7 +38,6 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
         "8s 7s 6s 5s 4s",
         "7s 6s 5s 4s 3s",
         "6s 5s 4s 3s 2s",
-        "As 5s 4s 3s 2s",
         NULL
     };
     for (size_t i = 0; straight_flushes[i] != NULL; ++i) {
@@ -52,6 +51,12 @@ void TestHandClassifyStraightFlush(CuTest* tc) {
     }
 }
 
+
+void TestHandClassifyWheelFlush(CuTest* tc) {
+    Card hand[5];
+    NewHandFromString("Ac 5c 4c 3c 2c", hand);
+    CuAssert(tc, "A-5-4-3-2 should be a wheel flush", HandClassify((const Card*)&hand) == WheelFlush);
+}
 
 void TestHandClassifyQuads(CuTest* tc) {
     Card hand[5];
@@ -129,7 +134,6 @@ void TestHandClassifyStraight(CuTest* tc) {
     Card hand[5];
     char output[OUTPUT_LENGTH];
     const char *straights[] = {
-        "Ac 5c 4s 3h 2d",
         "6s 5c 4s 3h 2d",
         "7d 6s 5c 4s 3h",
         "8h 7d 6s 5c 4s",
@@ -147,6 +151,12 @@ void TestHandClassifyStraight(CuTest* tc) {
         NewHandFromString(straights[i], hand);
         CuAssert(tc, output, HandClassify((const Card*)&hand) == Straight);
     }
+}
+
+void TestHandClassifyWheel(CuTest* tc) {
+    Card hand[5];
+    NewHandFromString("Ac 5c 4s 3h 2d", hand);
+    CuAssert(tc, "A-5-4-3-2 should be a wheel", HandClassify((const Card*)&hand) == Wheel);
 }
 
 

@@ -12,7 +12,8 @@
 
 typedef enum {
     InvalidHand, HighCard, Pair, TwoPair, ThreeOfAKind,
-    Straight, Flush, FullHouse, FourOfAKind, StraightFlush,
+    Wheel, Straight, Flush, FullHouse, FourOfAKind, WheelFlush,
+    StraightFlush,
 } HandType;
 
 
@@ -20,6 +21,7 @@ HandType HandClassify(const Card*);
 void     HandSort(Card*);
 
 bool HandIsStraightFlush(const Card*);
+bool HandIsWheelFlush(const Card*);
 bool HandIsFourOfAKind(const Card*);
 bool HandIsFullHouse(const Card*);
 bool HandIsFlush(const Card*);
