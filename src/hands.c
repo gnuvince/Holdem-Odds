@@ -168,11 +168,13 @@ static bool HandIsFlush(const Card* cards) {
  * or precede a Deuce.
  */
 static bool HandIsStraight(const Card* cards) {
-    for (size_t i = 1; i < HAND_LENGTH; ++i)
-        if (cards[i].rank + 1 != cards[i - 1].rank)
-            return false;
-
-    return true;
+    // If the cards are properly ordered, if the first
+    // card's rank is equal to the rank of the next card
+    // plus 1 (meaning they have different ranks) and if
+    // the fifth card is 4 ranks lower than the first card,
+    // then we have a straight.
+    return cards[0].rank == cards[1].rank + 1
+        && cards[0].rank == cards[4].rank + 4;
 }
 
 
