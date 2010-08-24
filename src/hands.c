@@ -174,10 +174,7 @@ bool HandIsStraight(const Card* cards) {
  */
 bool HandIsWheel(const Card* cards) {
        return cards[0].rank == Ace
-           && cards[1].rank == Five
-           && cards[2].rank == Four
-           && cards[3].rank == Trey
-           && cards[4].rank == Deuce;
+           && cards[1].rank == Five;
 }
 
 
