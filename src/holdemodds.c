@@ -10,6 +10,8 @@
 #include "hands.h"
 
 
+#define ITERATIONS 2000000
+
 void usage(const char* name) {
     fprintf(stderr, "Usage: %s <c1> <c2> <c3> <c4>\n", name);
     exit(1);
@@ -30,11 +32,11 @@ int main(int argc, char **argv) {
     size_t results[3] = {0, 0, 0};
 
     for (size_t i = 0; i < 4; ++i)
-        cards[i] = NewCardFromString(argv[1+i]);
+        cards[i] = NewCardFromString(argv[i+1]);
 
     NewDeck(deck, cards, 4);
 
-    for (size_t i = 0; i < 2000000; ++i) {
+    for (size_t i = 0; i < ITERATIONS; ++i) {
         DeckShuffle(deck, 3, 48);
 
         hand1[0] = cards[0];
@@ -47,6 +49,9 @@ int main(int argc, char **argv) {
             hand2[2 + j] = deck[j];
         }
 
+        HandSort(hand1);
+        HandSort(hand2);
+
         int c = HandCompare(hand1, hand2);
 
         if (c > 0) results[0]++;
@@ -55,9 +60,9 @@ int main(int argc, char **argv) {
     }
 
     printf("WIN: %.2f\tTIE: %.2f\tLOSS: %.2f\n",
-           results[0] / 2000000.0,
-           results[1] / 2000000.0,
-           results[2] / 2000000.0);
+           results[0] / (double)ITERATIONS,
+           results[1] / (double)ITERATIONS,
+           results[2] / (double)ITERATIONS);
 
     return 0;
 }

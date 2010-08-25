@@ -84,12 +84,11 @@ void HandSort(Card* hand) {
  * Find the type of the hand that's been given to us.  Go
  * from strongest to weakest type; this assures us that a
  * full house is not classified as merely a pair.
+ *
+ * The cards *must* be sorted in order for this function
+ * to work properly.
  */
 HandType HandClassify(Card* cards) {
-    // The cards *must* be sorted in order for this function
-    // to work properly.
-    HandSort(cards);
-
     if (HandIsStraightFlush(cards)) return StraightFlush;
     if (HandIsWheelFlush(cards))    return WheelFlush;
     if (HandIsFourOfAKind(cards))   return FourOfAKind;
