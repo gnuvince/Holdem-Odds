@@ -8,7 +8,7 @@
 
 
 
-void DeckShuffle(Card*, size_t);
+void DeckShuffle(Card*, size_t, size_t);
 void NewDeck(Card*, const Card*, size_t);
 
 #endif

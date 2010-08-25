@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "holdemodds.h"
 #include "cards.h"
@@ -20,6 +21,7 @@ int main(int argc, char **argv) {
         usage(argv[0]);
     }
 
+    srand(time(NULL));
 
     Card deck[48];
     Card cards[4];
@@ -32,8 +34,8 @@ int main(int argc, char **argv) {
 
     NewDeck(deck, cards, 4);
 
-    for (size_t i = 0; i < 10000; ++i) {
-        DeckShuffle(deck, 48);
+    for (size_t i = 0; i < 2000000; ++i) {
+        DeckShuffle(deck, 3, 48);
 
         hand1[0] = cards[0];
         hand1[1] = cards[1];
@@ -45,9 +47,6 @@ int main(int argc, char **argv) {
             hand2[2 + j] = deck[j];
         }
 
-        HandSort(hand1);
-        HandSort(hand2);
-
         int c = HandCompare(hand1, hand2);
 
         if (c > 0) results[0]++;
@@ -56,9 +55,9 @@ int main(int argc, char **argv) {
     }
 
     printf("WIN: %.2f\tTIE: %.2f\tLOSS: %.2f\n",
-           results[0] / 10000.0,
-           results[1] / 10000.0,
-           results[2] / 10000.0);
+           results[0] / 2000000.0,
+           results[1] / 2000000.0,
+           results[2] / 2000000.0);
 
     return 0;
 }

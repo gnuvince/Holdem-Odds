@@ -1,6 +1,7 @@
 CC=clang
 #CC=gcc
-CFLAGS=-Wall -Wextra -pedantic -O2 -std=c99
+CFLAGS=-Wall -Wextra -pedantic -O2 -std=c99 # ${PROFILEFLAGS}
+PROFILEFLAGS=-g -pg
 
 holdemodds: build
 	${CC} ${CFLAGS} \

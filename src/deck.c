@@ -1,18 +1,15 @@
 #include <stdlib.h>
-#include <time.h>
 
 #include "cards.h"
 #include "deck.h"
 
 
 /*
- * Knuth-Shuffle implementation (http://en.wikipedia.org/wiki/Knuth_shuffle)
+ * Shuffle the n first cards in a deck of `deck_size` cards.
  */
-void DeckShuffle(Card* deck, size_t N) {
-    srand(time(NULL));
-
-    for (size_t i = N-1; i > 0; --i) {
-        size_t j = rand() % i;
+void DeckShuffle(Card* deck, size_t n, size_t deck_size) {
+    for (size_t i = 0; i < n; ++i) {
+        size_t j = rand() % deck_size;
         CardSwap(&deck[i], &deck[j]);
     }
 }

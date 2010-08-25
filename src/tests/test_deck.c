@@ -21,7 +21,7 @@ void TestDeckShuffle(CuTest* tc) {
         }
     }
 
-    DeckShuffle(deck2, CARDS_PER_DECK);
+    DeckShuffle(deck2, CARDS_PER_DECK, CARDS_PER_DECK);
 
     // Make sure all the cards are valid
     for (size_t i = 0; i < CARDS_PER_DECK; ++i) {
