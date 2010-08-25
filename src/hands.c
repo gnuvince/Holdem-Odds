@@ -6,6 +6,19 @@
 #include "hands.h"
 
 
+static bool HandIsStraightFlush(const Card*);
+static bool HandIsWheelFlush(const Card*);
+static bool HandIsFourOfAKind(const Card*);
+static bool HandIsFullHouse(const Card*);
+static bool HandIsFlush(const Card*);
+static bool HandIsStraight(const Card*);
+static bool HandIsWheel(const Card*);
+static bool HandIsThreeOfAKind(const Card*);
+static bool HandIsTwoPair(const Card*);
+static bool HandIsPair(const Card*);
+static bool HandIsHighCard(const Card*);
+
+
 /*
  * Compare two hands and return:
  *   < 0 if hand1 < hand2
@@ -39,11 +52,7 @@ int HandCompare(Card* hand1, Card* hand2) {
  * strongest to weakest.
  */
 void HandSort(Card* hand) {
-    Bucket buckets[RANKS_PER_DECK];
-
-    // Initialize the count of all buckets to 0 (otherwise,
-    // BucketAdd will misbehave).
-    memset(buckets, 0, RANKS_PER_DECK * sizeof(Bucket));
+    Bucket buckets[RANKS_PER_DECK] = {{{{InvalidRank, InvalidSuit}}, 0}};
 
     // Copy the cards into the buckets.
     for (size_t i = 0; i < HAND_LENGTH; ++i) {

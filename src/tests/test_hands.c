@@ -8,9 +8,9 @@
 #define OUTPUT_LENGTH 512 // Error messages should not exceed this length.
 
 static char ranks[] = " 23456789TJQKA";
-static char suits[] = " chds";
-static size_t ranksLength = 13;
-static size_t suitsLength = 4;
+//static char suits[] = " chds";
+//static size_t ranksLength = 13;
+//static size_t suitsLength = 4;
 
 
 void NewHandFromString(const char* string, Card* hand) {
