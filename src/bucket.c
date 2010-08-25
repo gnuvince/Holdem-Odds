@@ -1,5 +1,3 @@
-#include <stddef.h>
-
 #include "bucket.h"
 #include "cards.h"
 
