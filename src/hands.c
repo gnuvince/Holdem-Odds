@@ -89,19 +89,21 @@ void HandSort(Card* hand) {
  * to work properly.
  */
 HandType HandClassify(Card* cards) {
-    if (HandIsStraightFlush(cards)) return StraightFlush;
-    if (HandIsWheelFlush(cards))    return WheelFlush;
-    if (HandIsFourOfAKind(cards))   return FourOfAKind;
-    if (HandIsFullHouse(cards))     return FullHouse;
-    if (HandIsFlush(cards))         return Flush;
-    if (HandIsStraight(cards))      return Straight;
-    if (HandIsWheel(cards))         return Wheel;
-    if (HandIsThreeOfAKind(cards))  return ThreeOfAKind;
-    if (HandIsTwoPair(cards))       return TwoPair;
-    if (HandIsPair(cards))          return Pair;
-    if (HandIsHighCard(cards))      return HighCard;
-
-    return InvalidHand; // Should be unreachable
+    if (HandIsFlush(cards)) {
+        if (HandIsStraight(cards)) return StraightFlush;
+        if (HandIsWheel(cards))    return WheelFlush;
+        return Flush;
+    }
+    else {
+        if (HandIsFourOfAKind(cards))   return FourOfAKind;
+        if (HandIsFullHouse(cards))     return FullHouse;
+        if (HandIsStraight(cards))      return Straight;
+        if (HandIsWheel(cards))         return Wheel;
+        if (HandIsThreeOfAKind(cards))  return ThreeOfAKind;
+        if (HandIsTwoPair(cards))       return TwoPair;
+        if (HandIsPair(cards))          return Pair;
+        return HighCard;
+    }
 }
 
 

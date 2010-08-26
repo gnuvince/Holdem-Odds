@@ -1,4 +1,4 @@
-CC=clang
+#CC=clang
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic -O2 -std=c99 -g -pg
 
