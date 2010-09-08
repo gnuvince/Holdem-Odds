@@ -1,5 +1,5 @@
 CC=clang
-CC=gcc -pg
+#CC=gcc -pg
 CFLAGS=-Wall -Wextra -pedantic -O2 -std=c99 -g
 
 holdemodds: build
@@ -10,7 +10,8 @@ holdemodds: build
 		src/bucket.o \
 		src/holdemodds.c -o holdemodds
 
-build: cards.o hands.o bucket.o deck.o
+build: src/cards.o src/hands.o src/bucket.o src/deck.o
+
 
 clean:
 	rm -f holdemodds src/*.o src/tests/*.o src/tests/all_tests
@@ -30,14 +31,14 @@ test: build
 		src/tests/CuTest.c
 	src/tests/all_tests
 
-cards.o: src/cards.c src/cards.h
+cards.o:
 	${CC} ${CFLAGS} -c src/cards.c -o src/cards.o
 
-hands.o: cards.o src/hands.c src/hands.h
+hands.o: src/cards.o
 	${CC} ${CFLAGS} -c src/hands.c -o src/hands.o
 
-bucket.o: cards.o src/bucket.c src/bucket.h
+bucket.o: src/cards.o
 	${CC} ${CFLAGS} -c src/bucket.c -o src/bucket.o
 
-deck.o: cards.o src/deck.c src/deck.h
+deck.o: srrc/cards.o
 	${CC} ${CFLAGS} -c src/deck.c -o src/deck.o
